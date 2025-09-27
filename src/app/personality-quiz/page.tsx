@@ -24,7 +24,7 @@ export default function Page() {
   const [currentSection, setCurrentSection] = useState(0);
   const [responses, setResponses] = useState<Record<number, number>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   const { savePersonalityResponses } = useCareerGuidanceContext();
   const { toast } = useToast();
 
@@ -59,7 +59,7 @@ export default function Page() {
 
   const submitQuiz = async () => {
     setIsSubmitting(true);
-    
+
     try {
       const personalityResponses: PersonalityResponse[] = Object.entries(responses).map(
         ([questionId, rating]) => ({
@@ -67,21 +67,21 @@ export default function Page() {
           rating
         })
       );
-      
+
       await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate processing
-      
+
       savePersonalityResponses(personalityResponses);
-      
+
       toast({
         title: "Personality assessment completed!",
         description: "Your profile has been analyzed. Continuing to degree recommendations...",
       });
-      
+
       // Navigate to next page
       setTimeout(() => {
         window.location.href = '/qualifying-degrees';
       }, 1500);
-      
+
     } catch (error) {
       toast({
         title: "Error",
@@ -100,10 +100,9 @@ export default function Page() {
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <TypingAnimation 
-            text="Discover Your Personality & Career Match"
+          <TypingAnimation
             className="text-2xl font-bold text-gradient mb-4"
-          />
+          > Discover Your Personality & Career Match</TypingAnimation>
           <p className="text-muted-foreground text-lg">
             Answer these questions honestly to help us recommend the best career paths for you.
           </p>
@@ -118,15 +117,14 @@ export default function Page() {
             </span>
           </div>
           <Progress value={progressPercentage} className="h-2 mb-6" />
-          
+
           {/* Section Progress */}
           <div className="flex items-center justify-center gap-4">
             {SECTIONS.map((section, index) => (
               <div key={index} className="flex flex-col items-center gap-2">
-                <div className={`progress-step ${
-                  index < currentSection ? 'completed' : 
-                  index === currentSection ? 'active' : 'disabled'
-                }`}>
+                <div className={`progress-step ${index < currentSection ? 'completed' :
+                    index === currentSection ? 'active' : 'disabled'
+                  }`}>
                   {index < currentSection ? (
                     <Check className="h-4 w-4" />
                   ) : (
@@ -156,7 +154,7 @@ export default function Page() {
                   </h3>
                   <p className="text-foreground">{question.question}</p>
                 </div>
-                
+
                 <RadioGroup
                   value={responses[question.id]?.toString()}
                   onValueChange={(value) => handleResponseChange(question.id, parseInt(value))}
@@ -166,8 +164,8 @@ export default function Page() {
                   {[1, 2, 3, 4, 5].map((rating) => (
                     <div key={rating} className="flex flex-col items-center gap-1">
                       <RadioGroupItem value={rating.toString()} id={`q${question.id}-${rating}`} />
-                      <Label 
-                        htmlFor={`q${question.id}-${rating}`} 
+                      <Label
+                        htmlFor={`q${question.id}-${rating}`}
                         className="text-xs cursor-pointer"
                       >
                         {rating}
