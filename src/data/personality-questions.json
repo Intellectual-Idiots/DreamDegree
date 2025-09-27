@@ -1,0 +1,399 @@
+[
+  {
+    "id": 1,
+    "question": "I enjoy solving math problems and working with numbers.",
+    "category": "Numbers/Analytical",
+    "career_paths": [
+      "STEM",
+      "Finance",
+      "Engineering"
+    ]
+  },
+  {
+    "id": 2,
+    "question": "I like helping people solve their problems.",
+    "category": "Helping/Others",
+    "career_paths": [
+      "HR",
+      "Social Work",
+      "Medicine",
+      "Teaching"
+    ]
+  },
+  {
+    "id": 3,
+    "question": "I enjoy creating art, music, or writing.",
+    "category": "Creativity",
+    "career_paths": [
+      "Arts",
+      "Design",
+      "Marketing",
+      "Writing"
+    ]
+  },
+  {
+    "id": 4,
+    "question": "I enjoy using computers, coding, or working with technology.",
+    "category": "Tech",
+    "career_paths": [
+      "IT",
+      "Computer Science",
+      "Engineering"
+    ]
+  },
+  {
+    "id": 5,
+    "question": "I prefer outdoor or physical activities to sitting at a desk.",
+    "category": "Physical",
+    "career_paths": [
+      "Sports",
+      "Agriculture",
+      "Environmental Science"
+    ]
+  },
+  {
+    "id": 6,
+    "question": "I enjoy learning about how businesses or economies work.",
+    "category": "Business Interest",
+    "career_paths": [
+      "Business",
+      "Economics",
+      "Finance"
+    ]
+  },
+  {
+    "id": 7,
+    "question": "I like experimenting with ideas or making new things.",
+    "category": "Innovation",
+    "career_paths": [
+      "Design",
+      "R&D",
+      "Entrepreneurship"
+    ]
+  },
+  {
+    "id": 8,
+    "question": "I enjoy reading and exploring new subjects beyond what is taught in class.",
+    "category": "Curiosity",
+    "career_paths": [
+      "Research",
+      "Academia",
+      "Science"
+    ]
+  },
+  {
+    "id": 9,
+    "question": "I work best in a structured environment with clear rules.",
+    "category": "Structured",
+    "career_paths": [
+      "Accounting",
+      "Law",
+      "Logistics"
+    ]
+  },
+  {
+    "id": 10,
+    "question": "I work best in flexible or changing environments.",
+    "category": "Flexible",
+    "career_paths": [
+      "Entrepreneurship",
+      "Design",
+      "Research"
+    ]
+  },
+  {
+    "id": 11,
+    "question": "I prefer working alone rather than in a team.",
+    "category": "Independent",
+    "career_paths": [
+      "Research",
+      "Programming",
+      "Writing"
+    ]
+  },
+  {
+    "id": 12,
+    "question": "I prefer working in a team rather than alone.",
+    "category": "Teamwork",
+    "career_paths": [
+      "HR",
+      "Management",
+      "Healthcare"
+    ]
+  },
+  {
+    "id": 13,
+    "question": "I am motivated more by achievement and personal success than helping others.",
+    "category": "Achievement",
+    "career_paths": [
+      "Business",
+      "Finance",
+      "Engineering"
+    ]
+  },
+  {
+    "id": 14,
+    "question": "I am motivated more by helping others than personal gain.",
+    "category": "Helping",
+    "career_paths": [
+      "Social Work",
+      "Healthcare",
+      "Teaching"
+    ]
+  },
+  {
+    "id": 15,
+    "question": "I like taking risks and trying new opportunities.",
+    "category": "Risk-Taking",
+    "career_paths": [
+      "Entrepreneurship",
+      "Marketing",
+      "Business"
+    ]
+  },
+  {
+    "id": 16,
+    "question": "I prefer stability and predictable routines.",
+    "category": "Stability",
+    "career_paths": [
+      "Education",
+      "Public Service",
+      "Healthcare"
+    ]
+  },
+  {
+    "id": 17,
+    "question": "I enjoy solving complex puzzles or challenges.",
+    "category": "Analytical",
+    "career_paths": [
+      "STEM",
+      "Engineering",
+      "IT"
+    ]
+  },
+  {
+    "id": 18,
+    "question": "I make decisions based on logic rather than emotions.",
+    "category": "Logical",
+    "career_paths": [
+      "Engineering",
+      "Finance",
+      "IT"
+    ]
+  },
+  {
+    "id": 19,
+    "question": "I make decisions based on intuition or feelings.",
+    "category": "Intuitive",
+    "career_paths": [
+      "Arts",
+      "Marketing",
+      "Entrepreneurship"
+    ]
+  },
+  {
+    "id": 20,
+    "question": "I prefer practical solutions to real-world problems.",
+    "category": "Practical",
+    "career_paths": [
+      "Business",
+      "Healthcare",
+      "Technical Trades"
+    ]
+  },
+  {
+    "id": 21,
+    "question": "I enjoy exploring theoretical concepts and ideas.",
+    "category": "Theoretical",
+    "career_paths": [
+      "Science",
+      "Academia",
+      "Research"
+    ]
+  },
+  {
+    "id": 22,
+    "question": "I enjoy experimenting with new methods or approaches.",
+    "category": "Experimental",
+    "career_paths": [
+      "R&D",
+      "Design",
+      "Innovation"
+    ]
+  },
+  {
+    "id": 23,
+    "question": "I am outgoing and enjoy meeting new people.",
+    "category": "Extraversion",
+    "career_paths": [
+      "Sales",
+      "Management",
+      "PR"
+    ]
+  },
+  {
+    "id": 24,
+    "question": "I enjoy being the center of attention.",
+    "category": "Extraversion",
+    "career_paths": [
+      "Marketing",
+      "Media",
+      "Entertainment"
+    ]
+  },
+  {
+    "id": 25,
+    "question": "I stay calm under pressure.",
+    "category": "Emotional Stability",
+    "career_paths": [
+      "Healthcare",
+      "Emergency Services",
+      "Law"
+    ]
+  },
+  {
+    "id": 26,
+    "question": "I get stressed easily.",
+    "category": "Emotional Stability",
+    "career_paths": []
+  },
+  {
+    "id": 27,
+    "question": "I am organized and pay attention to details.",
+    "category": "Conscientiousness",
+    "career_paths": [
+      "Accounting",
+      "Law",
+      "QA"
+    ]
+  },
+  {
+    "id": 28,
+    "question": "I prefer flexibility over strict routines.",
+    "category": "Conscientiousness",
+    "career_paths": [
+      "Creative fields",
+      "Research"
+    ]
+  },
+  {
+    "id": 29,
+    "question": "I am open to new experiences and ideas.",
+    "category": "Openness",
+    "career_paths": [
+      "Arts",
+      "Research",
+      "Entrepreneurship"
+    ]
+  },
+  {
+    "id": 30,
+    "question": "I enjoy thinking about abstract concepts.",
+    "category": "Openness",
+    "career_paths": [
+      "Philosophy",
+      "Science",
+      "Research"
+    ]
+  },
+  {
+    "id": 31,
+    "question": "I consider other people’s feelings before acting.",
+    "category": "Agreeableness",
+    "career_paths": [
+      "HR",
+      "Counseling",
+      "Teaching"
+    ]
+  },
+  {
+    "id": 32,
+    "question": "I enjoy helping others even if it requires personal sacrifice.",
+    "category": "Agreeableness",
+    "career_paths": [
+      "Social Work",
+      "Healthcare",
+      "Non-profit"
+    ]
+  },
+  {
+    "id": 33,
+    "question": "I learn best by doing hands-on projects or experiments.",
+    "category": "Practical Learner",
+    "career_paths": [
+      "Engineering",
+      "Medical Sciences",
+      "Design"
+    ]
+  },
+  {
+    "id": 34,
+    "question": "I learn best by reading and writing.",
+    "category": "Theoretical Learner",
+    "career_paths": [
+      "Humanities",
+      "Law",
+      "Communications"
+    ]
+  },
+  {
+    "id": 35,
+    "question": "I enjoy fast-paced problem-solving tasks.",
+    "category": "Fast-Paced",
+    "career_paths": [
+      "Computer Science",
+      "Business",
+      "Emergency Services"
+    ]
+  },
+  {
+    "id": 36,
+    "question": "I prefer step-by-step guidance rather than figuring things out myself.",
+    "category": "Guided Learning",
+    "career_paths": [
+      "Law",
+      "Medicine",
+      "Education"
+    ]
+  },
+  {
+    "id": 37,
+    "question": "I enjoy independent study and self-directed learning.",
+    "category": "Independent Learner",
+    "career_paths": [
+      "Research",
+      "Academia",
+      "Programming"
+    ]
+  },
+  {
+    "id": 38,
+    "question": "I like group projects and collaborative learning.",
+    "category": "Team Learning",
+    "career_paths": [
+      "Management",
+      "HR",
+      "Healthcare"
+    ]
+  },
+  {
+    "id": 39,
+    "question": "I prefer learning practical skills I can use in real life.",
+    "category": "Skills-Focused",
+    "career_paths": [
+      "Technical Courses",
+      "Business",
+      "Healthcare"
+    ]
+  },
+  {
+    "id": 40,
+    "question": "I enjoy exploring ideas without immediate practical use.",
+    "category": "Theory-Focused",
+    "career_paths": [
+      "Science",
+      "Philosophy",
+      "Research"
+    ]
+  }
+]
