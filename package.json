@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@hookform/resolvers": "^5.2.2",
     "@pinecone-database/pinecone": "^6.1.2",
     "@radix-ui/react-accordion": "^1.2.12",
@@ -47,9 +48,18 @@
     "lucide-react": "^0.544.0",
     "next": "15.5.4",
     "next-themes": "^0.4.6",
+=======
+    "@radix-ui/react-slot": "^1.2.3",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.544.0",
+    "motion": "^12.23.22",
+    "next": "15.5.4",
+>>>>>>> b54fd5dd988404df90d767157907f9cce248537d
     "react": "19.1.0",
     "react-day-picker": "^9.11.0",
     "react-dom": "19.1.0",
+<<<<<<< HEAD
     "react-hook-form": "^7.63.0",
     "react-resizable-panels": "^3.0.6",
     "recharts": "^2.15.4",
@@ -57,6 +67,10 @@
     "tailwind-merge": "^3.3.1",
     "vaul": "^1.1.2",
     "zod": "^4.1.11"
+=======
+    "rough-notation": "^0.5.1",
+    "tailwind-merge": "^3.3.1"
+>>>>>>> b54fd5dd988404df90d767157907f9cce248537d
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
