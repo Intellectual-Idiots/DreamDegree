@@ -117,7 +117,7 @@ export default function Page() {
     
     // Check if student meets minimum requirements
     for (const [subject, minMark] of Object.entries(degree.requirements.subjects)) {
-      const studentMark = academicResults.find(r => r.subject === subject)?.mark || 0;
+      const studentMark = academicResults.find((r: { subject: string; }) => r.subject === subject)?.mark || 0;
       if (studentMark < minMark) return false;
     }
     
@@ -133,8 +133,7 @@ export default function Page() {
     
     return (
       <Card className="career-card group cursor-pointer">
-        <BorderBeam>
-          <CardHeader className="pb-3">
+        <CardHeader className="pb-3">
             <div className="flex items-start justify-between">
               <div className="flex-1">
                 {isRecommended && rank && (
@@ -196,7 +195,7 @@ export default function Page() {
               </Button>
             </div>
           </CardContent>
-        </BorderBeam>
+          <BorderBeam duration={8} size={100} />
       </Card>
     );
   };
@@ -207,9 +206,10 @@ export default function Page() {
         {/* Header */}
         <div className="mb-8">
           <TypingAnimation 
-            text="Your Qualifying University Degrees"
             className="text-2xl font-bold text-gradient mb-4"
-          />
+          >
+            Your Qualifying University Degrees
+          </TypingAnimation>
           <p className="text-muted-foreground text-lg">
             Discover university programs that match your academic performance and personality.
           </p>
@@ -284,7 +284,7 @@ export default function Page() {
                     <div>
                       <h4 className="font-semibold mb-2">Top Strengths:</h4>
                       <div className="space-y-1">
-                        {personalityProfile.strengths.map((strength, index) => (
+                        {personalityProfile.strengths.map((strength: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined, index: React.Key | null | undefined) => (
                           <Badge key={index} variant="secondary" className="mr-1 mb-1">
                             {strength}
                           </Badge>
