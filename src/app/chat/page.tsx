@@ -11,7 +11,7 @@ import { ChatMessage } from '@/types/career';
 
 const SUGGESTED_QUESTIONS = [
   "What career paths match my personality?",
-  "How can I improve my chances for medicine?", 
+  "How can I improve my chances for medicine?",
   "What are the job prospects for computer science?",
   "Should I consider a gap year?",
   "What subjects should I focus on improving?",
@@ -50,7 +50,7 @@ export default function Page() {
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  
+
   const { personalityProfile, academicResults } = useCareerGuidanceContext();
 
   const scrollToBottom = () => {
@@ -75,9 +75,9 @@ export default function Page() {
   const generateAIResponse = async (userMessage: string): Promise<string> => {
     // Simulate AI processing time
     await new Promise(resolve => setTimeout(resolve, 1500 + Math.random() * 2000));
-    
+
     const lowerMessage = userMessage.toLowerCase();
-    
+
     if (lowerMessage.includes('career') || lowerMessage.includes('path')) {
       return `Based on your personality profile, I can see you have strong analytical and problem-solving skills. Your top career matches include:
 
@@ -89,12 +89,12 @@ Your academic results show particular strength in ${academicResults[0]?.subject 
 
 Would you like me to elaborate on any specific field?`;
     }
-    
+
     if (lowerMessage.includes('improve') || lowerMessage.includes('study')) {
-      const weakestSubject = academicResults.reduce((min, subject) => 
+      const weakestSubject = academicResults.reduce((min: { mark: number; }, subject: { mark: number; }) =>
         subject.mark < min.mark ? subject : min, academicResults[0] || { subject: 'Physical Sciences', mark: 65 }
       );
-      
+
       return `I notice your ${weakestSubject.subject} mark is ${weakestSubject.mark}%. Here's a targeted improvement plan:
 
 **Immediate Actions (Next 4 weeks):**
@@ -116,12 +116,12 @@ Would you like me to elaborate on any specific field?`;
 
 With consistent effort, a 10-15% improvement is realistic within 6 months. Would you like specific resources for ${weakestSubject.subject}?`;
     }
-    
+
     if (lowerMessage.includes('medicine') || lowerMessage.includes('doctor')) {
       return `Medicine is a competitive field requiring strong academic performance and specific personal qualities. Here's what you need to know:
 
 **Academic Requirements:**
-• Mathematics: 80%+ (you have ${academicResults.find(r => r.subject === 'Mathematics')?.mark || 'N/A'}%)
+• Mathematics: 80%+ (you have ${academicResults.find((r: { subject: string; }) => r.subject === 'Mathematics')?.mark || 'N/A'}%)
 • Physical Sciences: 75%+  
 • Life Sciences: 80%+
 • English: 70%+
@@ -142,14 +142,14 @@ Focus intensively on Life Sciences and Physical Sciences if these are below requ
 
 Would you like specific study strategies for the science subjects?`;
     }
-    
+
     if (lowerMessage.includes('computer science') || lowerMessage.includes('programming')) {
       return `Computer Science is an excellent match for your profile! Here's why and what to expect:
 
 **Why It Fits You:**
 • Your analytical and logical thinking style
 • Problem-solving preferences align with programming
-• Mathematics strength (${academicResults.find(r => r.subject === 'Mathematics')?.mark || 'N/A'}%) is crucial for CS
+• Mathematics strength (${academicResults.find((r: { subject: string; }) => r.subject === 'Mathematics')?.mark || 'N/A'}%) is crucial for CS
 
 **Job Market Outlook:**
 • High demand across all industries
@@ -174,7 +174,7 @@ Most programs need Mathematics 70%+ and English 60%+. Your current performance l
 
 Want specific university recommendations or coding resources to get started?`;
     }
-    
+
     // Default response
     return `That's a great question! Based on your unique profile combining ${personalityProfile?.strengths.slice(0, 2).join(' and ')} strengths with your academic performance, I can provide personalized guidance.
 
@@ -192,28 +192,28 @@ What interests you most?`;
 
   const sendMessage = async (content: string) => {
     if (!content.trim()) return;
-    
+
     const userMessage: ChatMessage = {
       id: Date.now().toString(),
       content: content.trim(),
       sender: 'user',
       timestamp: new Date()
     };
-    
+
     setMessages(prev => [...prev, userMessage]);
     setInputValue('');
     setIsTyping(true);
-    
+
     try {
       const aiResponse = await generateAIResponse(content);
-      
+
       const aiMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
         content: aiResponse,
         sender: 'ai',
         timestamp: new Date()
       };
-      
+
       setMessages(prev => [...prev, aiMessage]);
     } catch (error) {
       const errorMessage: ChatMessage = {
@@ -234,23 +234,21 @@ What interests you most?`;
 
   const MessageBubble: React.FC<{ message: ChatMessage }> = ({ message }) => (
     <div className={`flex gap-3 ${message.sender === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
-      <div className={`h-8 w-8 rounded-full flex items-center justify-center flex-shrink-0 ${
-        message.sender === 'user' 
-          ? 'bg-primary text-white' 
-          : 'gradient-primary text-white'
-      }`}>
+      <div className={`h-8 w-8 rounded-full flex items-center justify-center flex-shrink-0 ${message.sender === 'user'
+        ? 'bg-primary text-white'
+        : 'gradient-primary text-white'
+        }`}>
         {message.sender === 'user' ? (
           <User className="h-4 w-4" />
         ) : (
           <Bot className="h-4 w-4" />
         )}
       </div>
-      
-      <div className={`max-w-[70%] rounded-2xl px-4 py-3 ${
-        message.sender === 'user'
-          ? 'bg-primary text-primary-foreground ml-auto'
-          : 'bg-muted/50 border'
-      }`}>
+
+      <div className={`max-w-[70%] rounded-2xl px-4 py-3 ${message.sender === 'user'
+        ? 'bg-primary text-primary-foreground ml-auto'
+        : 'bg-muted/50 border'
+        }`}>
         <div className="text-sm leading-relaxed whitespace-pre-wrap">
           {message.content}
         </div>
@@ -266,10 +264,10 @@ What interests you most?`;
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <TypingAnimation 
-            text="Your Personal Career Guidance Assistant"
+          <TypingAnimation
+
             className="text-2xl font-bold text-gradient mb-4"
-          />
+          >Your Personal Career Guidance Assistant</TypingAnimation>
           <p className="text-muted-foreground text-lg">
             Get personalized advice about your career journey based on your unique profile.
           </p>
@@ -285,7 +283,7 @@ What interests you most?`;
                   Career Guidance Chat
                 </CardTitle>
               </CardHeader>
-              
+
               <CardContent className="flex-1 flex flex-col p-0">
                 {/* Messages */}
                 <ScrollArea className="flex-1 p-4">
@@ -293,7 +291,7 @@ What interests you most?`;
                     {messages.map(message => (
                       <MessageBubble key={message.id} message={message} />
                     ))}
-                    
+
                     {isTyping && (
                       <div className="flex gap-3">
                         <div className="h-8 w-8 rounded-full gradient-primary flex items-center justify-center">
@@ -311,7 +309,7 @@ What interests you most?`;
                   </div>
                   <div ref={messagesEndRef} />
                 </ScrollArea>
-                
+
                 {/* Input */}
                 <div className="border-t p-4">
                   <div className="flex gap-2">
@@ -396,25 +394,25 @@ What interests you most?`;
                   <div>
                     <h4 className="font-medium text-sm mb-2">Top Strengths</h4>
                     <div className="flex flex-wrap gap-1">
-                      {personalityProfile.strengths.slice(0, 3).map((strength, index) => (
+                      {personalityProfile.strengths.slice(0, 3).map((strength: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined, index: React.Key | null | undefined) => (
                         <Badge key={index} variant="secondary" className="text-xs">
                           {strength}
                         </Badge>
                       ))}
                     </div>
                   </div>
-                  
+
                   <div>
                     <h4 className="font-medium text-sm mb-1">Work Style</h4>
                     <p className="text-xs text-muted-foreground">
                       {personalityProfile.workStyle}
                     </p>
                   </div>
-                  
+
                   <div>
                     <h4 className="font-medium text-sm mb-2">Academic Results</h4>
                     <div className="space-y-1">
-                      {academicResults.slice(0, 3).map((result, index) => (
+                      {academicResults.slice(0, 3).map((result: { subject: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined; mark: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined; }, index: React.Key | null | undefined) => (
                         <div key={index} className="flex justify-between text-xs">
                           <span className="text-muted-foreground">{result.subject}</span>
                           <span className="font-medium">{result.mark}%</span>
