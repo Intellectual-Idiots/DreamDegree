@@ -1,5 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Target, TrendingUp, BookOpen, Calendar, ArrowRight, AlertCircle } from 'lucide-react';
+"use client";
+
+import React, { useState } from 'react';
+import { Target, TrendingUp, Calendar, ArrowRight, AlertCircle } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -106,6 +109,7 @@ const PERFECT_MATCH_DEGREES: Degree[] = [
 export default function Page() {
   const [selectedGap, setSelectedGap] = useState<string>('');
   const { personalityProfile } = useCareerGuidanceContext();
+  const router = useRouter();
 
   const GapAnalysisCard: React.FC<{ gap: GapAnalysisType }> = ({ gap }) => {
     const isSelected = selectedGap === gap.degreeId;
@@ -244,10 +248,9 @@ export default function Page() {
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <TypingAnimation 
-            text="Close the Gap to Your Dream Degree"
-            className="text-2xl font-bold text-gradient mb-4"
-          />
+          <TypingAnimation className="text-2xl font-bold text-gradient mb-4">
+            Close the Gap to Your Dream Degree
+          </TypingAnimation>
           <p className="text-muted-foreground text-lg">
             See what it takes to qualify for programs you're almost ready for, plus discover perfect matches.
           </p>
@@ -335,7 +338,7 @@ export default function Page() {
           <Button
             size="lg"
             className="px-8 py-3 text-lg gradient-primary text-white border-0 hover:opacity-90"
-            onClick={() => window.location.href = '/ai-assistant'}
+            onClick={() => router.push('/ai-assistant')}
           >
             Get Personalized Guidance
           </Button>
