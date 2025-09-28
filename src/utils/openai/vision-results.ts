@@ -1,22 +1,40 @@
+import { Buffer } from "buffer";
 import OpenAI from "openai";
-import dotenv from "dotenv";
-import path from "path";
 
-// Load environment variables
-const envPath = path.resolve(__dirname, "../../../.env.local");
-console.log(`Loading environment variables from: ${envPath}`);
-dotenv.config({ path: envPath });
+export type VisionSubject = {
+  name: string;
+  mark: number;
+};
 
-const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+export type VisionResponse = {
+  subjects: VisionSubject[];
+};
 
-const systemPrompt = `
-You are an expert vision assistant. 
-You will receive a South African Matriculant's transcript (Grade 12/11 final results). 
+let cachedClient: OpenAI | null = null;
+
+const getClient = () => {
+  if (cachedClient) {
+    return cachedClient;
+  }
+
+  const apiKey = process.env.OPENAI_API_KEY;
+  console.log("This line ran");
+  console.log(apiKey);
+  if (!apiKey) {
+    throw new Error("OpenAI API key is not configured.");
+  }
+
+  cachedClient = new OpenAI({ apiKey });
+  return cachedClient;
+};
+
+const systemPrompt = `You are an expert vision assistant.
+You will receive a South African Matriculant's transcript (Grade 12/11 final results).
 Your role is to:
-1. Analyze the transcript image carefully.  
-2. Extract all the subjects and their marks as percentages.  
-3. Write out subject names in full (no abbreviations, e.g., "Maths" → "Mathematics", "Afr" → "Afrikaans", "English" → "English Home Language" , "Life Sciences" → "Life Sciences").  
-4. Return **strictly a JSON object** with the structure:  
+1. Analyze the transcript image carefully.
+2. Extract all the subjects and their marks as percentages.
+3. Write out subject names in full (no abbreviations, e.g., "Maths" → "Mathematics", "Afr" → "Afrikaans", "English" → "English Home Language" , "Life Sciences" → "Life Sciences").
+4. Return strictly a JSON object with the structure:
 
 {
   "subjects": [
@@ -26,49 +44,74 @@ Your role is to:
   ]
 }
 
-⚠️ Do not include explanations, commentary, or extra text — output only valid JSON.
-Do not include markdown formatting, code fences, or explanations.
-`;
+Do not include explanations, commentary, code fences (\`\`\`), or extra text — output only valid JSON.`;
 
-const userPrompt = `
-Analyze the following image of a South African Matriculant's transcript (Grade 12/11 final results) and return the subjects and their marks as percentages.
-`;
+const userPrompt = `Analyze the image of a South African Matriculant's transcript (Grade 12/11 final results) and return the subjects and their marks as percentages.`;
 
-const imageUrl = "https://groundup.org.za/media/uploads/images/Graphics/matricresults/image2.jpg";
-
-
-async function main(): Promise<void> {
-  try {
-    const response = await client.chat.completions.create({
-        model: "gpt-4o",
-        messages: [
-            {
-                role: "system",
-                content: systemPrompt
-        },
-            
-          {
-            role: "user",
-            content: [
-              { type: "text", text: userPrompt },
-              {
-                type: "image_url",
-                image_url: {
-                  url: imageUrl,
-                  detail: "auto"
-                }
-              }
-            ]
-          }
-        ],
-      
-      });
-      
-
-    console.log( response.choices[0]?.message?.content);
-  } catch (error) {
-    console.error("Error in vision call:", error);
+const parseVisionResponse = (content: string | null | undefined): VisionResponse => {
+  if (!content) {
+    throw new Error("INVALID_VISION_RESPONSE");
   }
-}
 
-main();
+  try {
+    const normalized = content.trim().replace(/^```json\s*|```$/g, "");
+    const parsed = JSON.parse(normalized) as VisionResponse;
+    if (!parsed.subjects || !Array.isArray(parsed.subjects)) {
+      throw new Error("INVALID_VISION_RESPONSE");
+    }
+
+    return {
+      subjects: parsed.subjects
+        .map((subject) => ({
+          name: subject.name?.trim(),
+          mark: Number(subject.mark),
+        }))
+        .filter((subject) => subject.name && Number.isFinite(subject.mark)) as VisionSubject[],
+    };
+  } catch (error) {
+    throw new Error("INVALID_VISION_RESPONSE");
+  }
+};
+
+const VISION_MODEL = process.env.OPENAI_VISION_MODEL ?? "gpt-4o-mini";
+
+export async function extractVisionResultsFromFile(file: File | Blob): Promise<VisionResponse> {
+  const arrayBuffer = await file.arrayBuffer();
+  const base64 = Buffer.from(arrayBuffer).toString("base64");
+  const mimeType = file instanceof File ? file.type : "image/jpeg";
+
+  const dataUrl = `data:${mimeType};base64,${base64}`;
+
+  const client = getClient();
+
+  const start = Date.now();
+
+  const response = await client.chat.completions.create({
+    model: VISION_MODEL,
+    messages: [
+      {
+        role: "system",
+        content: systemPrompt,
+      },
+      {
+        role: "user",
+        content: [
+          { type: "text", text: userPrompt },
+          {
+            type: "image_url",
+            image_url: {
+              url: dataUrl,
+              detail: "low",
+            },
+          },
+        ],
+      },
+    ],
+    max_tokens: 400,
+  });
+
+  const elapsed = Date.now() - start;
+  const content = response.choices[0]?.message?.content;
+  console.log("Vision model raw response (", elapsed, "ms):", content);
+  return parseVisionResponse(content);
+}
