@@ -5,30 +5,6 @@
 
 import { get_ufs_aps, get_up_aps, get_wits_aps } from "./aps-calculator";
 
-// Helper function to write JSON data to public directory
-const write_to_file = async (filename: string, data: any) => {
-  try {
-    const response = await fetch('/api/write-file', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        filename: filename,
-        data: data
-      })
-    });
-
-    if (!response.ok) {
-      throw new Error(`Failed to write ${filename}: ${response.statusText}`);
-    }
-
-    console.log(`Successfully wrote ${filename} to public directory`);
-  } catch (error) {
-    console.error(`Error writing ${filename}:`, error);
-  }
-}
-
 const get_aps_by_university = (university: string): number => {
   switch (university) {
     case 'University of the Free State':
@@ -63,6 +39,10 @@ const get_qualified_degrees = async () => {
     console.log('All degrees fetched:', get_all);
     const user_marks = JSON.parse(localStorage.getItem('resultsData') || '[]');
 
+    console.log('First 3 degrees:', get_all.slice(0, 3));
+    console.log('User marks:', user_marks);
+    console.log('Unique universities:', [...new Set(get_all.map((d: { university: any; }) => d.university))]);
+
     // console.log(get_all);
 
     if (!get_all || !Array.isArray(get_all)) {
@@ -85,11 +65,16 @@ const get_qualified_degrees = async () => {
 }
 
 const check_degree_qualification = (degree: any, user_marks: any[]): boolean => {
-  // Check APS requirement
-  const user_aps = get_aps_by_university(degree.university);
-  console.log(`User APS for ${degree.university}:`, user_aps, 'Degree APS requirement:', degree.aps);
-  if (user_aps < degree.aps) {
-    return false;
+  try {
+    const user_aps = get_aps_by_university(degree.university);
+    console.log('User APS:', user_aps, 'Required:', degree.aps);
+    if (user_aps < degree.aps) {
+      console.log('Failed APS check');
+      return false;
+    }
+  } catch (error) {
+    console.log('University not recognized:', degree.university);
+    return false; // Add this to handle unknown universities
   }
 
   // Check subject requirements
