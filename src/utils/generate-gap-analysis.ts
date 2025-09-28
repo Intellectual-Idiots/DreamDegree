@@ -2,6 +2,9 @@
 
 import { get_ufs_aps, get_up_aps, get_wits_aps } from "./aps-calculator";
 
+import { get_almost_qualified_degrees } from '@/utils/filters';
+
+
 interface Degree {
   title: string;
   description: string;
@@ -42,7 +45,19 @@ interface StudentMark {
 //   { "subject": "physical sciences", "mark": 88 }
 // ];
 
-const STUDENT_MARKS: StudentMark[] = JSON.parse(localStorage.getItem('resultsData') || '[]');
+function getStudentMarks(): StudentMark[] {
+  if (typeof window !== "undefined" && window.localStorage) {
+    try {
+      return JSON.parse(localStorage.getItem("resultsData") || "[]");
+    } catch {
+      return [];
+    }
+  }
+  return []; // fallback for server
+}
+
+const STUDENT_MARKS: StudentMark[] = getStudentMarks();
+
 
 // Hardcoded APS scores
 const UP_APS = get_up_aps();
@@ -138,11 +153,20 @@ function calculateGapAnalysis(degree: Degree): EnhancedDegree {
   };
 }
 
+// Generate gap analysis and store in localStorage
 export async function generateGapAnalysisJSON(): Promise<EnhancedDegree[]> {
   try {
-    // Load almost qualified degrees
-    const response = await fetch('/almost-qualified.json');
-    const degrees: Degree[] = await response.json();
+    // Generate almost-qualified.json
+
+    // // Load almost qualified degrees
+    // const response = await fetch('/almost-qualified-v2.json');
+    // const degrees: Degree[] = await response.json();
+
+    // ============================
+    const degrees: Degree[] = await get_almost_qualified_degrees();
+
+    console.log('Fetched almost-qualified degrees:', degrees);
+    // ============================
 
     // Process each degree with gap analysis
     const enhancedDegrees = degrees.map(degree => calculateGapAnalysis(degree));

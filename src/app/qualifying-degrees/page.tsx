@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react';
 
+import { get_qualified_degrees } from '@/utils/filters';
+
 // Define the degree interface
 interface Degree {
   title: string;
@@ -37,10 +39,16 @@ const QualifyingDegreesPage = () => {
   useEffect(() => {
     const loadData = async () => {
       try {
-        // Load all degrees
-        const allDegreesResponse = await fetch('/qualified-degrees.json');
-        const allDegreesData: Degree[] = await allDegreesResponse.json();
+
+        // // Load all degrees
+        // const allDegreesResponse = await fetch('/qualified-degrees-v2.json');
+        // const allDegreesData: Degree[] = await allDegreesResponse.json();
+        // setAllDegrees(allDegreesData);
+
+        // ====================
+        const allDegreesData: Degree[] = await get_qualified_degrees();
         setAllDegrees(allDegreesData);
+        //=====================
 
         // Load recommended degrees
         const recommendedDegreesResponse = await fetch('/recommended-degrees.json');

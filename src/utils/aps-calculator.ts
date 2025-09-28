@@ -1,13 +1,26 @@
+const safeGetResultsData = (): { subject: string; mark: number }[] => {
+  if (typeof window !== "undefined" && window.localStorage) {
+    try {
+      return JSON.parse(localStorage.getItem("resultsData") || "[]");
+    } catch {
+      return [];
+    }
+  }
+  return [];
+};
+
+
 const get_wits_aps = (): number => {
   // get resultsData array from local storage
   // looks like: [{'subject': 'mathematics', 'mark': 93}, ...]
-  const resultsData = JSON.parse(localStorage.getItem('resultsData') || '[]');
+  // const resultsData = JSON.parse(localStorage.getItem('resultsData') || '[]');
+  const resultsData = safeGetResultsData();
 
   // check if mathematics/mathematical literacy and english home/first additional language are present
   if (resultsData.some((result: { subject: string }) => result.subject === 'mathematics' || result.subject === 'mathematical literacy') &&
-      resultsData.some((result: { subject: string }) => result.subject === 'english home language' || result.subject === 'english first additional language') && 
-      resultsData.some((result: { subject: string }) => result.subject === 'life orientation')) {
-    
+    resultsData.some((result: { subject: string }) => result.subject === 'english home language' || result.subject === 'english first additional language') &&
+    resultsData.some((result: { subject: string }) => result.subject === 'life orientation')) {
+
     let totalAps = 0;
     let subjectsProcessed = 0;
 
@@ -39,12 +52,12 @@ const get_wits_aps = (): number => {
       if (mark >= 40) return 3;
       return 0; // Below 40% gets 0 points
     };
-    
+
     // First, process the 3 compulsory subjects
     const compulsorySubjects: string[] = [];
-    
+
     // Find and process English
-    const englishSubject = resultsData.find((result: { subject: string }) => 
+    const englishSubject = resultsData.find((result: { subject: string }) =>
       result.subject === 'english home language' || result.subject === 'english first additional language'
     );
     if (englishSubject) {
@@ -52,9 +65,9 @@ const get_wits_aps = (): number => {
       compulsorySubjects.push(englishSubject.subject);
       subjectsProcessed++;
     }
-    
+
     // Find and process Mathematics
-    const mathSubject = resultsData.find((result: { subject: string }) => 
+    const mathSubject = resultsData.find((result: { subject: string }) =>
       result.subject === 'mathematics'
     );
     if (mathSubject) {
@@ -62,9 +75,9 @@ const get_wits_aps = (): number => {
       compulsorySubjects.push(mathSubject.subject);
       subjectsProcessed++;
     }
-    
+
     // Find and process Life Orientation
-    const lifeOrientationSubject = resultsData.find((result: { subject: string }) => 
+    const lifeOrientationSubject = resultsData.find((result: { subject: string }) =>
       result.subject === 'life orientation'
     );
     if (lifeOrientationSubject) {
@@ -72,19 +85,19 @@ const get_wits_aps = (): number => {
       compulsorySubjects.push(lifeOrientationSubject.subject);
       subjectsProcessed++;
     }
-    
+
     // Now get the remaining subjects (excluding compulsory ones) and sort by marks
     const remainingSubjects = resultsData
       .filter((result: { subject: string }) => !compulsorySubjects.includes(result.subject))
       .sort((a: { mark: number }, b: { mark: number }) => b.mark - a.mark);
-    
+
     // Add the highest-scoring remaining subjects to reach 7 total subjects
     const remainingSlotsNeeded = 7 - subjectsProcessed;
     for (let i = 0; i < Math.min(remainingSlotsNeeded, remainingSubjects.length); i++) {
       totalAps += (remainingSubjects[i].subject === "further studies mathematics" || remainingSubjects[i].subject === "further studies english") ? getEnglishMathPoints(remainingSubjects[i].mark) : getRegularSubjectPoints(remainingSubjects[i].mark);
       subjectsProcessed++;
     }
-    
+
     return totalAps;
   }
 
@@ -93,11 +106,11 @@ const get_wits_aps = (): number => {
 
 const get_up_aps = (): number => {
   // get resultsData array from local storage
-  const resultsData = JSON.parse(localStorage.getItem('resultsData') || '[]');
+  const resultsData = safeGetResultsData();
 
   // Check if compulsory subjects are present (same as Wits but excluding Life Orientation)
   if (resultsData.some((result: { subject: string }) => result.subject === 'mathematics' || result.subject === 'mathematical literacy') &&
-      resultsData.some((result: { subject: string }) => result.subject === 'english home language' || result.subject === 'english first additional language')) {
+    resultsData.some((result: { subject: string }) => result.subject === 'english home language' || result.subject === 'english first additional language')) {
 
     // Helper function for UP APS points calculation
     const getUpPoints = (mark: number): number => {
@@ -115,7 +128,7 @@ const get_up_aps = (): number => {
     const compulsorySubjects: string[] = [];
 
     // Find and process English (compulsory)
-    const englishSubject = resultsData.find((result: { subject: string }) => 
+    const englishSubject = resultsData.find((result: { subject: string }) =>
       result.subject === 'english home language' || result.subject === 'english first additional language'
     );
     if (englishSubject) {
@@ -125,7 +138,7 @@ const get_up_aps = (): number => {
     }
 
     // Find and process Mathematics (compulsory)
-    const mathSubject = resultsData.find((result: { subject: string }) => 
+    const mathSubject = resultsData.find((result: { subject: string }) =>
       result.subject === 'mathematics' || result.subject === 'mathematical literacy'
     );
     if (mathSubject) {
@@ -136,7 +149,7 @@ const get_up_aps = (): number => {
 
     // Get remaining subjects (excluding compulsory and Life Orientation) and sort by marks
     const remainingSubjects = resultsData
-      .filter((result: { subject: string }) => 
+      .filter((result: { subject: string }) =>
         !compulsorySubjects.includes(result.subject) && result.subject !== 'life orientation')
       .sort((a: { mark: number }, b: { mark: number }) => b.mark - a.mark);
 
@@ -155,11 +168,11 @@ const get_up_aps = (): number => {
 
 const get_ufs_aps = (): number => {
   // get resultsData array from local storage
-  const resultsData = JSON.parse(localStorage.getItem('resultsData') || '[]');
+  const resultsData = safeGetResultsData();
 
   // Check if compulsory subjects are present (same as Wits but excluding Life Orientation)
   if (resultsData.some((result: { subject: string }) => result.subject === 'mathematics' || result.subject === 'mathematical literacy') &&
-      resultsData.some((result: { subject: string }) => result.subject === 'english home language' || result.subject === 'english first additional language')) {
+    resultsData.some((result: { subject: string }) => result.subject === 'english home language' || result.subject === 'english first additional language')) {
 
     // Helper function for UFS APS points calculation
     const getUfsPoints = (mark: number): number => {
@@ -177,7 +190,7 @@ const get_ufs_aps = (): number => {
     const compulsorySubjects: string[] = [];
 
     // Find and process English (compulsory)
-    const englishSubject = resultsData.find((result: { subject: string }) => 
+    const englishSubject = resultsData.find((result: { subject: string }) =>
       result.subject === 'english home language' || result.subject === 'english first additional language'
     );
     if (englishSubject) {
@@ -187,7 +200,7 @@ const get_ufs_aps = (): number => {
     }
 
     // Find and process Mathematics (compulsory)
-    const mathSubject = resultsData.find((result: { subject: string }) => 
+    const mathSubject = resultsData.find((result: { subject: string }) =>
       result.subject === 'mathematics' || result.subject === 'mathematical literacy'
     );
     if (mathSubject) {
@@ -198,7 +211,7 @@ const get_ufs_aps = (): number => {
 
     // Get remaining subjects (excluding compulsory and Life Orientation) and sort by marks
     const remainingSubjects = resultsData
-      .filter((result: { subject: string }) => 
+      .filter((result: { subject: string }) =>
         !compulsorySubjects.includes(result.subject) && result.subject !== 'life orientation')
       .sort((a: { mark: number }, b: { mark: number }) => b.mark - a.mark);
 
@@ -210,10 +223,10 @@ const get_ufs_aps = (): number => {
     }
 
     // Check for Life Orientation bonus point
-    const lifeOrientationSubject = resultsData.find((result: { subject: string }) => 
+    const lifeOrientationSubject = resultsData.find((result: { subject: string }) =>
       result.subject === 'life orientation'
     );
-    
+
     if (lifeOrientationSubject && lifeOrientationSubject.mark >= 60) {
       totalAps += 1; // Add 1 bonus point for 60-100% in Life Orientation
     }
