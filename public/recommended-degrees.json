@@ -1,0 +1,94 @@
+[
+  {
+    "title": "Bachelor of Commerce, Information Systems",
+    "description": "The pervasiveness of technology...",
+    "faculty": "Commerce, Law and Management",
+    "duration": 3,
+    "university": "University of the Witwatersrand",
+    "aps": 38,
+    "mathematics": 60,
+    "english home language": 60,
+    "english first additional language": 60,
+    "careers": [
+      "Business Analyst",
+      "Systems Analyst",
+      "IT Consultant"
+    ],
+    "additional requirements": [],
+    "recommendation_reason": "Based on your personality assessment, you show strong analytical thinking and technology interests. Your high scores in problem-solving and preference for structured work environments make this degree ideal. The blend of business and technology aligns perfectly with your career motivations."
+  },
+  {
+    "title": "Bachelor of Science, Computer Science",
+    "description": "Computer Science focuses on the design, development, and analysis of software and systems that drive innovation in every sector of society.",
+    "faculty": "Science",
+    "duration": 3,
+    "university": "University of the Witwatersrand",
+    "aps": 44,
+    "mathematics": 70,
+    "english home language": 60,
+    "english first additional language": 60,
+    "careers": [
+      "Software Engineer",
+      "Data Scientist",
+      "AI Specialist"
+    ],
+    "additional requirements": [],
+    "recommendation_reason": "You scored highly in analytical thinking, independence, and problem-solving. Your preference for logical approaches and fast-paced problem-solving makes Computer Science a strong match, providing a pathway to careers in technology and innovation."
+  },
+  {
+    "title": "Bachelor of Arts, Psychology",
+    "description": "Psychology explores human behaviour, mental processes, and the factors that shape individual and group dynamics, preparing students for diverse roles in health and social development.",
+    "faculty": "Humanities",
+    "duration": 3,
+    "university": "University of the Witwatersrand",
+    "aps": 34,
+    "mathematics": 50,
+    "english home language": 60,
+    "english first additional language": 60,
+    "careers": [
+      "Counsellor",
+      "Human Resources Practitioner",
+      "Researcher"
+    ],
+    "additional requirements": [],
+    "recommendation_reason": "Your high scores in empathy, agreeableness, and interest in helping others suggest strong suitability for Psychology. This degree will allow you to work closely with people and make meaningful contributions in mental health, HR, or social work."
+  },
+  {
+    "title": "Bachelor of Engineering Science, Biomedical Engineering",
+    "description": "Biomedical Engineering applies principles of engineering and biological sciences to develop technologies that improve healthcare, such as medical devices and prosthetics.",
+    "faculty": "Engineering and the Built Environment",
+    "duration": 4,
+    "university": "University of the Witwatersrand",
+    "aps": 42,
+    "mathematics": 70,
+    "english home language": 60,
+    "english first additional language": 60,
+    "careers": [
+      "Biomedical Engineer",
+      "Clinical Engineer",
+      "Medical Device Developer"
+    ],
+    "additional requirements": [
+      "Physical Science 70%"
+    ],
+    "recommendation_reason": "Your personality results show strong problem-solving, innovation, and interest in practical applications of science. Biomedical Engineering combines your analytical skills with a desire to improve lives, aligning perfectly with your motivations."
+  },
+  {
+    "title": "Bachelor of Education, Senior Phase and Further Education and Training",
+    "description": "This degree prepares students to become professional educators, equipping them with teaching skills and subject specialisations to inspire the next generation.",
+    "faculty": "Humanities",
+    "duration": 4,
+    "university": "University of the Witwatersrand",
+    "aps": 30,
+    "mathematics": 40,
+    "english home language": 60,
+    "english first additional language": 60,
+    "careers": [
+      "High School Teacher",
+      "Curriculum Developer",
+      "Education Specialist"
+    ],
+    "additional requirements": [],
+    "recommendation_reason": "Your results show strong teamwork, empathy, and motivation to help others. With your personality leaning towards guidance and structured environments, Education offers a fulfilling path where you can make a lasting impact."
+  }
+]
