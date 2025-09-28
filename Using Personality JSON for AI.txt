@@ -1,0 +1,7 @@
+import { getPersonalitySummary } from '@/utils/generate-personality-summary';
+
+const summary = getPersonalitySummary();
+if (summary) {
+  // Send this to your AI for generating degree recommendations
+  const aiPrompt = `User personality: ${JSON.stringify(summary)}`;
+}
