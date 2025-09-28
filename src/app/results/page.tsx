@@ -341,8 +341,9 @@ export default function ResultsPage() {
     }
 
     const file = files[0];
-    if (file.type !== "image/jpeg") {
-      setFileError("Please upload a JPG image file.");
+    const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp", "image/gif"];
+    if (!allowedTypes.includes(file.type)) {
+      setFileError("Please upload a valid image file (JPG, PNG, WebP, or GIF).");
       setSelectedFile(null);
       return;
     }
@@ -689,7 +690,7 @@ export default function ResultsPage() {
                     Upload Report
                   </h2>
                   <p className="mt-2 text-sm text-[var(--color-text-subtle)]">
-                    Drag and drop your JPG report card here, or click to select a
+                    Drag and drop your report card image here, or click to select a
                     file.
                   </p>
                 </header>
@@ -708,13 +709,13 @@ export default function ResultsPage() {
                 >
                   <input
                     type="file"
-                    accept="image/jpeg"
+                    accept="image/jpeg,image/jpg,image/png,image/webp,image/gif"
                     className="hidden"
                     onChange={(event) => handleFileInput(event.target.files)}
                   />
                   <UploadCloud className="h-10 w-10 text-[var(--color-primary)]" aria-hidden />
                   <p className="mt-3 text-sm text-[var(--color-text-subtle)]">
-                    Drop JPG file here or click to browse
+                    Drop image file here or click to browse
                   </p>
                   {selectedFile && (
                     <p className="mt-2 text-xs text-[var(--color-text-subtle)]">
