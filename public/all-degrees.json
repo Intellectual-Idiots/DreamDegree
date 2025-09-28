@@ -1,0 +1,134 @@
+[
+  {
+    "title": "Bachelor of Commerce, General",
+    "description": "The Wits BCom includes compulsory first-year courses that build foundational knowledge in Economics, Accounting, Commercial Law, Information Systems, and Introductory Mathematics and Business Statistics. These courses prepare students for a career in the commercial and related sectors of any economy. It is a double major degree, requiring at least two full majors, with the option to explore three potential majors in the second year. Students can choose majors from Commerce, Law, and Management (CLM), or select a second major from other faculties like Science or Humanities. The degree offers flexibility, allowing students to change majors or move between specialized BCom degrees if needed, and does not require committing to major choices in the first year.",
+    "faculty": "Commerce, Law and Management",
+    "duration": 3,
+    "university": "University of the Witwatersrand",
+    "aps": 38,
+    "mathematics": 60,
+    "english home language": 60,
+    "english first additional language": 60,
+    "careers": [
+      "Chartered Certified Accountant",
+      "Chartered Financial Analyst",
+      "Internal Auditor",
+      "Management Accountant"
+    ],
+    "additional requirements": []
+  },
+  {
+    "title": "Bachelor of Commerce, Information Systems",
+    "description": "The pervasiveness of technology in the knowledge economy has resulted in increasing demand for professionals with a unique blend of analytical, technical, business and communication skills. In Information Systems, the programme studies what happens when technologies, people, organisations and societies interact. It focuses on the design of end-to-end solutions where technology may be an element, differentiating it from disciplines like Information Technology, Computer Science, and Software Engineering. The analytical, technical, business and communication skills gained can lead to a wide range of career choices.",
+    "faculty": "Commerce, Law and Management",
+    "duration": 3,
+    "university": "University of the Witwatersrand",
+    "aps": 38,
+    "mathematics": 60,
+    "english home language": 60,
+    "english first additional language": 60,
+    "careers": [
+      "Business Analyst",
+      "Systems Analyst",
+      "IT Consultant",
+      "Information Systems Manager"
+    ],
+    "additional requirements": []
+  },
+  {
+    "title": "Bachelor of Commerce, Politics, Philosophy and Economics",
+    "description": "The Bachelor of Commerce in Politics, Philosophy and Economics combines foundational commerce courses with interdisciplinary studies in politics, philosophy, and economics. It builds critical thinking, analytical, and problem-solving skills through exploring the intersections of these fields. Students gain a broad understanding of societal, ethical, and economic issues, preparing them for diverse roles in policy, business, and public service. The programme emphasizes real-world applications and debate, fostering intellectual agility for global challenges.",
+    "faculty": "Commerce, Law and Management",
+    "duration": 3,
+    "university": "University of the Witwatersrand",
+    "aps": 38,
+    "mathematics": 60,
+    "english home language": 60,
+    "english first additional language": 60,
+    "careers": [
+      "Policy Analyst",
+      "Economic Consultant",
+      "Political Advisor",
+      "Research Analyst"
+    ],
+    "additional requirements": []
+  },
+  {
+    "title": "Bachelor of Administration",
+    "description": "This degree focuses on public sector management, preparing students with knowledge and skills in governance, policy implementation, and public administration. It develops competencies for effective management in government institutions and public service organizations.",
+    "faculty": "Faculty of Economic and Management Sciences",
+    "duration": 3,
+    "university": "University of the Free State",
+    "aps": 28,
+    "mathematics": 30,
+    "mathematical literacy": 60,
+    "english home language": 50,
+    "english first additional language": 50,
+    "careers": [
+      "Public sector managers",
+      "Government administrators",
+      "Policy analysts",
+      "Local government officials",
+      "Municipal managers",
+      "Public service coordinators"
+    ],
+    "additional requirements": []
+  },
+  {
+    "title": "Bachelor of Commerce",
+    "description": "A comprehensive business degree that provides foundational knowledge in commerce, economics, and business management. Students gain broad business skills applicable across various industries and sectors.",
+    "faculty": "Faculty of Economic and Management Sciences",
+    "duration": 3,
+    "university": "University of the Free State",
+    "aps": 28,
+    "mathematics": 50,
+    "english home language": 50,
+    "english first additional language": 50,
+    "careers": [
+      "Business analysts",
+      "Management consultants",
+      "Financial advisors",
+      "Corporate managers",
+      "Entrepreneurs",
+      "Investment analysts"
+    ],
+    "additional requirements": []
+  },
+  {
+    "title": "Bachelor of Administration specialising in Public Administration",
+    "description": "This degree equips students with knowledge and skills in public sector management, governance, and policy-making. It prepares graduates for careers in government, international relations, and public service leadership.",
+    "faculty": "Faculty of Economic and Management Sciences",
+    "duration": 3,
+    "university": "University of Pretoria",
+    "aps": 28,
+    "mathematics": 40,
+    "mathematical literacy": 50,
+    "english home language": 60,
+    "english first additional language": 60,
+    "careers": [
+      "Diplomats",
+      "political analysts",
+      "managers in the public sector",
+      "local government and the private sector"
+    ],
+    "additional requirements": []
+  },
+  {
+    "title": "Bachelor of Commerce in Accounting Sciences",
+    "description": "This degree provides a strong foundation in financial reporting, auditing, taxation, and management accounting. It is the entry point for students wishing to qualify as Chartered Accountants (SA).",
+    "faculty": "Faculty of Economic and Management Sciences",
+    "duration": 3,
+    "university": "University of Pretoria",
+    "aps": 34,
+    "mathematics": 70,
+    "english home language": 60,
+    "english first additional language": 5,
+    "careers": [
+      "Chartered Accountant",
+      "External Auditor",
+      "Taxation Professional",
+      "Financial Manager"
+    ],
+    "additional requirements": []
+  }
+]
