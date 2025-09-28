@@ -1,5 +1,7 @@
 // src/utils/generate-gap-analysis.ts
 
+import { get_ufs_aps, get_up_aps, get_wits_aps } from "./aps-calculator";
+
 interface Degree {
   title: string;
   description: string;
@@ -30,20 +32,22 @@ interface StudentMark {
 }
 
 // Hardcoded student data
-const STUDENT_MARKS: StudentMark[] = [
-  { "subject": "english home language", "mark": 65 },
-  { "subject": "afrikaans first additional language", "mark": 91 },
-  { "subject": "mathematics", "mark": 87 },
-  { "subject": "life orientation", "mark": 86 },
-  { "subject": "geography", "mark": 71 },
-  { "subject": "life sciences", "mark": 76 },
-  { "subject": "physical sciences", "mark": 88 }
-];
+// const STUDENT_MARKS: StudentMark[] = [
+//   { "subject": "english home language", "mark": 65 },
+//   { "subject": "afrikaans first additional language", "mark": 91 },
+//   { "subject": "mathematics", "mark": 87 },
+//   { "subject": "life orientation", "mark": 86 },
+//   { "subject": "geography", "mark": 71 },
+//   { "subject": "life sciences", "mark": 76 },
+//   { "subject": "physical sciences", "mark": 88 }
+// ];
+
+const STUDENT_MARKS: StudentMark[] = JSON.parse(localStorage.getItem('resultsData') || '[]');
 
 // Hardcoded APS scores
-const UP_APS = 42;
-const WITS_APS = 38;
-const UFS_APS = 35;
+const UP_APS = get_up_aps();
+const WITS_APS = get_wits_aps();
+const UFS_APS = get_ufs_aps();
 
 function getStudentAPS(university: string): number {
   switch (university.toLowerCase()) {

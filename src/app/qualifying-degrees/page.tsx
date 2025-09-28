@@ -38,7 +38,7 @@ const QualifyingDegreesPage = () => {
     const loadData = async () => {
       try {
         // Load all degrees
-        const allDegreesResponse = await fetch('/all-degrees.json');
+        const allDegreesResponse = await fetch('/qualified-degrees.json');
         const allDegreesData: Degree[] = await allDegreesResponse.json();
         setAllDegrees(allDegreesData);
 
@@ -160,8 +160,8 @@ const QualifyingDegreesPage = () => {
             <button
               onClick={() => setActiveTab('all')}
               className={`px-6 py-3 rounded-lg font-medium transition-all duration-200 ${activeTab === 'all'
-                  ? 'bg-[var(--color-primary)] text-white'
-                  : 'bg-[var(--color-surface-muted)] text-[var(--color-text)] hover:bg-[var(--color-primary-soft)] hover:text-[var(--color-primary)]'
+                ? 'bg-[var(--color-primary)] text-white'
+                : 'bg-[var(--color-surface-muted)] text-[var(--color-text)] hover:bg-[var(--color-primary-soft)] hover:text-[var(--color-primary)]'
                 }`}
             >
               All Degrees
@@ -169,8 +169,8 @@ const QualifyingDegreesPage = () => {
             <button
               onClick={() => setActiveTab('recommended')}
               className={`px-6 py-3 rounded-lg font-medium transition-all duration-200 ${activeTab === 'recommended'
-                  ? 'bg-[var(--color-primary)] text-white'
-                  : 'bg-[var(--color-surface-muted)] text-[var(--color-text)] hover:bg-[var(--color-primary-soft)] hover:text-[var(--color-primary)]'
+                ? 'bg-[var(--color-primary)] text-white'
+                : 'bg-[var(--color-surface-muted)] text-[var(--color-text)] hover:bg-[var(--color-primary-soft)] hover:text-[var(--color-primary)]'
                 }`}
             >
               Recommended Degrees
