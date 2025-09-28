@@ -96,6 +96,7 @@ const check_degree_qualification = (degree: any, user_marks: any[]): boolean => 
 
     // If user doesn't have this subject or mark is below requirement, they don't qualify
     if (!user_subject_result || user_subject_result.mark < required_mark) {
+      console.log(`Failed requirement: ${subject} - Required: ${required_mark}, User: ${user_subject_result?.mark || 'N/A'}`);
       return false;
     }
   }
