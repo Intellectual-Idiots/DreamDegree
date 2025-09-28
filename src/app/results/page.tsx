@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/select";
 import { analyzeReportAction } from "./action";
 import { Toaster } from "@/components/ui/sonner";
+import { useTranslation } from "@/utils/translate";
 
 const SUBJECTS_RAW = [
   "life orientation",
@@ -237,6 +238,7 @@ export default function ResultsPage() {
   ]);
   const [results, setResults] = useState<ResultRow[]>([]);
   const [hasHydrated, setHasHydrated] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     setHasHydrated(true);
@@ -267,7 +269,7 @@ export default function ResultsPage() {
       }
     } catch (err) {
       console.error("Failed to load stored results", err);
-      toast.error("We couldn't load your saved results. Starting fresh.");
+      toast.error(t("We couldn't load your saved results. Starting fresh."));
       setResults([]);
     } finally {
       setIsLoadingStoredResults(false);
@@ -302,11 +304,11 @@ export default function ResultsPage() {
       const response = await analyzeReportAction(formData);
 
       if (!response.success) {
-        setProcessingError(response.error);
+        setProcessingError(t(response.error));
         setSelectedFile(null);
         setDragActive(false);
         setIsProcessingUpload(false);
-        toast.error(response.error);
+        toast.error(t(response.error));
         return;
       }
 
@@ -320,7 +322,7 @@ export default function ResultsPage() {
       setResults(nextResults);
       setSelectedFile(null);
       setDragActive(false);
-      toast.success("Report analyzed successfully. Review and save your marks.");
+      toast.success(t("Report analyzed successfully. Review and save your marks."));
 
       setIsProcessingUpload(false);
       setIsUploadOpen(false);
@@ -328,12 +330,12 @@ export default function ResultsPage() {
     } catch (error) {
       console.error("Failed to analyze report", error);
       setProcessingError(
-        "We ran into a problem analyzing the report. Please try again.",
+        t("We ran into a problem analyzing the report. Please try again."),
       );
       setSelectedFile(null);
       setDragActive(false);
       setIsProcessingUpload(false);
-      toast.error("We ran into a problem analyzing the report. Please try again.");
+      toast.error(t("We ran into a problem analyzing the report. Please try again."));
     }
   };
 
@@ -344,7 +346,7 @@ export default function ResultsPage() {
 
     const file = files[0];
     if (!file.type.startsWith("image/")) {
-      setFileError("Please upload a valid image file (JPG, PNG, WebP, etc.).");
+      setFileError(t("Please upload a valid image file (JPG, PNG, WebP, etc.)."));
       setSelectedFile(null);
       return;
     }
@@ -402,7 +404,7 @@ export default function ResultsPage() {
     }
 
     if (!manualEntriesAreValid) {
-      toast.error("Please complete every subject and mark before saving.");
+      toast.error(t("Please complete every subject and mark before saving."));
       return;
     }
 
@@ -417,7 +419,7 @@ export default function ResultsPage() {
       setResults([]);
       localStorage.removeItem(LOCAL_STORAGE_KEY);
       setIsManualOpen(false);
-      toast.success("Saved results cleared from local storage.");
+      toast.success(t("Saved results cleared from local storage."));
       return;
     }
 
@@ -431,7 +433,7 @@ export default function ResultsPage() {
     setResults(parsedResults);
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(parsedResults));
     setIsManualOpen(false);
-    toast.success("Results saved to local storage.");
+    toast.success(t("Results saved to local storage."));
   };
 
   const availableSubjectsById = useMemo(() => {
@@ -484,7 +486,7 @@ export default function ResultsPage() {
     }
 
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(results));
-    toast.success("Saved results updated locally.");
+    toast.success(t("Saved results updated locally."));
   };
 
   const clearResults = () => {
@@ -495,7 +497,7 @@ export default function ResultsPage() {
     localStorage.removeItem(LOCAL_STORAGE_KEY);
     setResults([]);
     setManualEntries([createManualEntry()]);
-    toast.success("Saved results cleared.");
+    toast.success(t("Saved results cleared."));
   };
 
   const resultsAreValid = results.every(
@@ -524,14 +526,13 @@ export default function ResultsPage() {
             <UploadCloud className="h-8 w-8" aria-hidden />
           </div>
           <h2 className="text-xl font-semibold text-[var(--color-text)]">
-            Upload Report
+            {t('Upload Report')}
           </h2>
           <p className="flex-1 text-sm text-[var(--color-text-subtle)]">
-            Upload your academic transcript or report card and we will extract
-            your marks automatically.
+            {t('Upload your academic transcript or report card and we will extract your marks automatically.')}
           </p>
           <span className="mt-auto inline-flex items-center justify-center rounded-full bg-[var(--color-primary)] px-4 py-2 text-sm font-medium text-white transition group-hover:bg-[var(--color-primary-strong)]">
-            Choose File to Upload
+            {t('Choose File to Upload')}
           </span>
         </div>
       </button>
@@ -546,13 +547,13 @@ export default function ResultsPage() {
             <Plus className="h-8 w-8" aria-hidden />
           </div>
           <h2 className="text-xl font-semibold text-[var(--color-text)]">
-            Manually Enter Marks
+            {t('Manually Enter Marks')}
           </h2>
           <p className="flex-1 text-sm text-[var(--color-text-subtle)]">
-            Enter your marks for each subject manually.
+            {t('Enter your marks for each subject manually.')}
           </p>
           <span className="mt-auto inline-flex items-center justify-center rounded-full border border-[var(--color-button-outline)] px-4 py-2 text-sm font-medium text-[var(--color-primary)] transition group-hover:bg-[var(--color-primary)] group-hover:text-white">
-            Enter Marks
+            {t('Enter Marks')}
           </span>
         </div>
       </button>
@@ -563,7 +564,7 @@ export default function ResultsPage() {
     <section className="rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 shadow-sm">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h3 className="text-lg font-semibold text-[var(--color-text)]">
-          Saved Results
+          {t('Saved Results')}
         </h3>
         <div className="flex gap-3">
           <button
@@ -571,7 +572,7 @@ export default function ResultsPage() {
             onClick={clearResults}
             className="rounded-full border border-[var(--color-border)] px-4 py-2 text-sm font-medium text-[var(--color-text-subtle)] transition hover:bg-[var(--color-primary-soft)]"
           >
-            Clear Results
+            {t('Clear Results')}
           </button>
           <button
             type="button"
@@ -579,7 +580,7 @@ export default function ResultsPage() {
             disabled={!resultsAreValid}
             className="rounded-full bg-[var(--color-primary)] px-4 py-2 text-sm font-medium text-white transition hover:bg-[var(--color-primary-strong)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] disabled:cursor-not-allowed disabled:opacity-60"
           >
-            Save Locally
+            {t('Save Locally')}
           </button>
         </div>
       </div>
@@ -587,8 +588,8 @@ export default function ResultsPage() {
         <table className="min-w-full text-left text-sm text-[var(--color-text)]">
           <thead>
             <tr className="text-xs uppercase tracking-wide text-[var(--color-text-subtle)]">
-              <th className="px-4 py-2">Subject</th>
-              <th className="px-4 py-2">Mark (%)</th>
+              <th className="px-4 py-2">{t('Subject')}</th>
+              <th className="px-4 py-2">{t('Mark (%)')}</th>
             </tr>
           </thead>
           <tbody>
@@ -605,12 +606,12 @@ export default function ResultsPage() {
                     }
                   >
                     <SelectTrigger className="w-full border-[var(--color-border)] bg-[var(--color-surface)] text-left text-sm text-[var(--color-text)] focus-visible:ring-[var(--color-primary)]">
-                      <SelectValue placeholder="Select subject" />
+                      <SelectValue placeholder={t('Select subject')} />
                     </SelectTrigger>
                     <SelectContent className="border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text)]">
                       {SUBJECT_OPTIONS.map((option) => (
                         <SelectItem key={option.value} value={option.value}>
-                          {option.label}
+                          {t(option.label)}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -640,7 +641,7 @@ export default function ResultsPage() {
     <section className="flex items-center justify-center rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] p-8 shadow-sm">
       <div className="flex items-center gap-3 text-sm text-[var(--color-text-subtle)]">
         <span className="h-5 w-5 animate-spin rounded-full border-2 border-[var(--color-primary)] border-t-transparent" />
-        <span>Loading saved results…</span>
+        <span>{t('Loading saved results…')}</span>
       </div>
     </section>
   );
@@ -652,11 +653,10 @@ export default function ResultsPage() {
         <div className="mx-auto flex w-full max-w-5xl flex-col gap-12">
           <header className="text-center">
             <h1 className="text-3xl font-semibold text-[var(--color-text)]">
-              Manage Your Results
+              {t('Manage Your Results')}
             </h1>
             <p className="mt-2 text-base text-[var(--color-text-subtle)]">
-              Upload your report or enter your marks manually. You can edit saved
-              results anytime.
+              {t('Upload your report or enter your marks manually. You can edit saved results anytime.')}
             </p>
           </header>
 
@@ -688,11 +688,10 @@ export default function ResultsPage() {
               <div className="relative z-50 w-full max-w-lg rounded-3xl bg-[var(--color-surface)] p-8 text-[var(--color-text)] shadow-xl">
                 <header className="mb-6">
                   <h2 className="text-2xl font-semibold text-[var(--color-text)]">
-                    Upload Report
+                    {t('Upload Report')}
                   </h2>
                   <p className="mt-2 text-sm text-[var(--color-text-subtle)]">
-                    Drag and drop your report card image here, or click to select a
-                    file.
+                    {t('Drag and drop your report card image here, or click to select a file.')}
                   </p>
                 </header>
 
@@ -716,11 +715,11 @@ export default function ResultsPage() {
                   />
                   <UploadCloud className="h-10 w-10 text-[var(--color-primary)]" aria-hidden />
                   <p className="mt-3 text-sm text-[var(--color-text-subtle)]">
-                    Drop an image here or click to browse
+                    {t('Drop an image here or click to browse')}
                   </p>
                   {selectedFile && (
                     <p className="mt-2 text-xs text-[var(--color-text-subtle)]">
-                      Selected: {selectedFile.name}
+                      {t('Selected:')} {selectedFile.name}
                     </p>
                   )}
                   {fileError && (
@@ -733,7 +732,7 @@ export default function ResultsPage() {
                 {isProcessingUpload && (
                   <div className="mt-4 flex items-center gap-2 text-sm text-[var(--color-text-subtle)]">
                     <span className="h-4 w-4 animate-spin rounded-full border-2 border-[var(--color-primary)] border-t-transparent" />
-                    <span>Analyzing report…</span>
+                    <span>{t('Analyzing report…')}</span>
                   </div>
                 )}
 
@@ -750,7 +749,7 @@ export default function ResultsPage() {
                     onClick={closeAllModals}
                     className="rounded-full border border-[var(--color-border)] px-4 py-2 text-sm font-medium text-[var(--color-text-subtle)] transition hover:bg-[var(--color-primary-soft)] disabled:cursor-not-allowed disabled:opacity-60"
                   >
-                    Cancel
+                    {t('Cancel')}
                   </button>
                   <button
                     type="button"
@@ -758,7 +757,7 @@ export default function ResultsPage() {
                     onClick={closeAllModals}
                     className="rounded-full bg-[var(--color-primary)] px-4 py-2 text-sm font-medium text-white transition enabled:hover:bg-[var(--color-primary-strong)] disabled:cursor-not-allowed disabled:opacity-50"
                   >
-                    Done
+                    {t('Done')}
                   </button>
                 </div>
               </div>
@@ -768,10 +767,10 @@ export default function ResultsPage() {
               <div className="relative z-50 w-full max-w-3xl rounded-3xl bg-[var(--color-surface)] p-8 text-[var(--color-text)] shadow-xl">
                 <header className="mb-6">
                   <h2 className="text-2xl font-semibold text-[var(--color-text)]">
-                    Enter Marks Manually
+                    {t('Enter Marks Manually')}
                   </h2>
                   <p className="mt-2 text-sm text-[var(--color-text-subtle)]">
-                    Choose a subject and enter the corresponding percentage mark.
+                    {t('Choose a subject and enter the corresponding percentage mark.')}
                   </p>
                 </header>
 
@@ -783,7 +782,7 @@ export default function ResultsPage() {
                     >
                       <div>
                         <label className="mb-1 block text-xs font-medium uppercase tracking-wide text-[var(--color-text-subtle)]">
-                          Subject
+                          {t('Subject')}
                         </label>
                         <Select
                           value={entry.subject || undefined}
@@ -792,13 +791,13 @@ export default function ResultsPage() {
                           }
                         >
                           <SelectTrigger className="w-full border-[var(--color-border)] bg-[var(--color-surface)] text-left text-sm text-[var(--color-text)] focus-visible:ring-[var(--color-primary)]">
-                            <SelectValue placeholder="Select subject" />
+                            <SelectValue placeholder={t('Select subject')} />
                           </SelectTrigger>
                           <SelectContent className="border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text)]">
                             {(availableSubjectsById[entry.id] ?? SUBJECT_OPTIONS).map(
                               (option) => (
                                 <SelectItem key={option.value} value={option.value}>
-                                  {option.label}
+                                  {t(option.label)}
                                 </SelectItem>
                               ),
                             )}
@@ -808,7 +807,7 @@ export default function ResultsPage() {
 
                       <div>
                         <label className="mb-1 block text-xs font-medium uppercase tracking-wide text-[var(--color-text-subtle)]">
-                          Mark (%)
+                          {t('Mark (%)')}
                         </label>
                         <input
                           type="number"
@@ -829,7 +828,7 @@ export default function ResultsPage() {
                           className="h-10 rounded-full border border-[var(--color-border)] px-4 text-sm font-medium text-[var(--color-text-subtle)] transition hover:bg-[var(--color-primary-soft)] disabled:cursor-not-allowed disabled:opacity-50"
                           disabled={manualEntries.length === 1}
                         >
-                          Remove
+                          {t('Remove')}
                         </button>
                       </div>
                     </div>
@@ -842,7 +841,7 @@ export default function ResultsPage() {
                     onClick={addManualEntryRow}
                     className="rounded-full border border-[var(--color-button-outline)] px-4 py-2 text-sm font-medium text-[var(--color-primary)] transition hover:bg-[var(--color-primary)] hover:text-white"
                   >
-                    Add Subject
+                    {t('Add Subject')}
                   </button>
                   <div className="flex gap-3">
                     <button
@@ -850,7 +849,7 @@ export default function ResultsPage() {
                       onClick={closeAllModals}
                       className="rounded-full border border-[var(--color-border)] px-4 py-2 text-sm font-medium text-[var(--color-text-subtle)] transition hover:bg-[var(--color-primary-soft)]"
                     >
-                      Cancel
+                      {t('Cancel')}
                     </button>
                     <button
                       type="button"
@@ -858,7 +857,7 @@ export default function ResultsPage() {
                       disabled={!manualEntriesAreValid}
                       className="rounded-full bg-[var(--color-primary)] px-4 py-2 text-sm font-medium text-white transition hover:bg-[var(--color-primary-strong)] disabled:cursor-not-allowed disabled:opacity-60"
                     >
-                      Save Table
+                      {t('Save Table')}
                     </button>
                   </div>
                 </div>

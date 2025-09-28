@@ -4,6 +4,7 @@ import { generatePersonalitySummary } from '@/utils/generate-personality-summary
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTranslation } from '@/utils/translate';
 
 // Define the question interface
 interface Question {
@@ -27,6 +28,7 @@ const PersonalityQuizPage = () => {
   const [currentSection, setCurrentSection] = useState(0);
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [isLoading, setIsLoading] = useState(true);
+  const { t } = useTranslation();
 
   // Load questions from JSON file
   useEffect(() => {
@@ -154,7 +156,7 @@ const PersonalityQuizPage = () => {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-[var(--color-page-bg)] flex items-center justify-center">
-        <div className="text-[var(--color-text)] text-lg">Loading personality quiz...</div>
+        <div className="text-[var(--color-text)] text-lg">{t('Loading personality quiz...')}</div>
       </div>
     );
   }
@@ -166,7 +168,7 @@ const PersonalityQuizPage = () => {
       {/* Progress Indicator */}
       <div className="bg-[var(--color-surface)] border-b border-[var(--color-border)] py-6">
         <div className="max-w-4xl mx-auto px-6">
-          <h1 className="text-2xl font-bold mb-6">Personality Assessment</h1>
+          <h1 className="text-2xl font-bold mb-6">{t('Personality Assessment')}</h1>
 
           {/* Progress Steps */}
           <div className="flex items-center justify-between max-w-2xl mx-auto">
@@ -208,7 +210,7 @@ const PersonalityQuizPage = () => {
                   }`}
                 style={{ width: '80px' }}
               >
-                {section.title}
+                {t(section.title)}
               </div>
             ))}
           </div>
@@ -222,10 +224,10 @@ const PersonalityQuizPage = () => {
             {/* Section Header */}
             <div className="mb-8">
               <h2 className="text-xl font-semibold text-[var(--color-text)] mb-2">
-                {currentSectionData.title}
+                {t(currentSectionData.title)}
               </h2>
               <p className="text-[var(--color-text-subtle)]">
-                Section {currentSection + 1} of {sections.length} • {currentSectionData.questions.length} questions
+                {t(`Section ${currentSection + 1} of ${sections.length} • ${currentSectionData.questions.length} questions`)}
               </p>
             </div>
 
@@ -242,7 +244,7 @@ const PersonalityQuizPage = () => {
 
                   {/* Rating Scale */}
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-[var(--color-text-subtle)]">Strongly Disagree</span>
+                    <span className="text-sm text-[var(--color-text-subtle)]">{t('Strongly Disagree')}</span>
                     <div className="flex space-x-2 mx-4">
                       {[1, 2, 3, 4, 5].map((value) => (
                         <button
@@ -257,7 +259,7 @@ const PersonalityQuizPage = () => {
                         </button>
                       ))}
                     </div>
-                    <span className="text-sm text-[var(--color-text-subtle)]">Strongly Agree</span>
+                    <span className="text-sm text-[var(--color-text-subtle)]">{t('Strongly Agree')}</span>
                   </div>
                 </div>
               ))}
@@ -270,11 +272,11 @@ const PersonalityQuizPage = () => {
                 disabled={currentSection === 0}
                 className="px-6 py-3 border border-[var(--color-border)] text-[var(--color-text)] rounded-lg hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
               >
-                Previous
+                {t('Previous')}
               </button>
 
               <div className="text-sm text-[var(--color-text-subtle)]">
-                {Object.keys(answers).length} of {questions.length} questions answered
+                {t(`${Object.keys(answers).length} of ${questions.length} questions answered`)}
               </div>
 
               {currentSection < sections.length - 1 ? (
@@ -282,17 +284,17 @@ const PersonalityQuizPage = () => {
                   onClick={nextSection}
                   disabled={!isCurrentSectionComplete()}
                   className="px-6 py-3 bg-[var(--color-primary)] text-white rounded-lg hover:bg-[var(--color-primary-strong)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
-                >
-                  Next Section
-                </button>
+                  >
+                    {t('Next Section')}
+                  </button>
               ) : (
                 <button
                   onClick={handleSubmit}
                   disabled={!isQuizComplete()}
                   className="px-6 py-3 bg-[var(--color-primary)] text-white rounded-lg hover:bg-[var(--color-primary-strong)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
-                >
-                  Complete Quiz
-                </button>
+                  >
+                    {t('Complete Quiz')}
+                  </button>
               )}
             </div>
           </>

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 
 import { get_qualified_degrees } from '@/utils/touch';
+import { useTranslation } from '@/utils/translate';
 
 // Define the degree interface
 interface Degree {
@@ -30,6 +31,7 @@ const QualifyingDegreesPage = () => {
   const [recommendedDegrees, setRecommendedDegrees] = useState<RecommendedDegree[]>([]);
   const [personalityText, setPersonalityText] = useState<string>('');
   const [isLoading, setIsLoading] = useState(true);
+  const { t } = useTranslation();
 
   // Filters for "All Degrees" view
   const [selectedUniversity, setSelectedUniversity] = useState<string>('all');
@@ -98,53 +100,53 @@ const QualifyingDegreesPage = () => {
     <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-6 hover:border-[var(--color-primary)] transition-all duration-300 hover:shadow-lg">
       <div className="flex justify-between items-start mb-4">
         <div className="flex-1">
-          <h3 className="text-xl font-semibold text-[var(--color-text)] mb-2">{degree.title}</h3>
+          <h3 className="text-xl font-semibold text-[var(--color-text)] mb-2">{t(degree.title)}</h3>
           <div className="flex items-center gap-4 text-sm text-[var(--color-text-subtle)] mb-2">
-            <span className="bg-[var(--color-surface-muted)] px-2 py-1 rounded">{degree.university}</span>
-            <span>{degree.faculty}</span>
-            <span>{degree.duration} years</span>
+            <span className="bg-[var(--color-surface-muted)] px-2 py-1 rounded">{t(degree.university)}</span>
+            <span>{t(degree.faculty)}</span>
+            <span>{t(`${degree.duration} years`)}</span>
           </div>
         </div>
         <div className="text-right">
-          <div className="text-lg font-bold text-[var(--color-primary)]">APS {degree.aps}</div>
+          <div className="text-lg font-bold text-[var(--color-primary)]">{t(`APS ${degree.aps}`)}</div>
         </div>
       </div>
 
-      <p className="text-[var(--color-text)] mb-4 leading-relaxed">{degree.description}</p>
+      <p className="text-[var(--color-text)] mb-4 leading-relaxed">{t(degree.description)}</p>
 
       {/* Requirements */}
       <div className="mb-4">
-        <h4 className="text-sm font-medium text-[var(--color-text)] mb-2">Requirements:</h4>
+        <h4 className="text-sm font-medium text-[var(--color-text)] mb-2">{t('Requirements:')}</h4>
         <div className="flex flex-wrap gap-2 text-sm">
-          <span className="bg-[var(--color-surface-muted)] px-2 py-1 rounded">APS: {degree.aps}+</span>
+          <span className="bg-[var(--color-surface-muted)] px-2 py-1 rounded">{t(`APS: ${degree.aps}+`)}</span>
           {degree.mathematics && (
-            <span className="bg-[var(--color-surface-muted)] px-2 py-1 rounded">Mathematics: {degree.mathematics}%+</span>
+            <span className="bg-[var(--color-surface-muted)] px-2 py-1 rounded">{t(`Mathematics: ${degree.mathematics}%+`)}</span>
           )}
           {degree["english home language"] && (
-            <span className="bg-[var(--color-surface-muted)] px-2 py-1 rounded">English HL: {degree["english home language"]}%+</span>
+            <span className="bg-[var(--color-surface-muted)] px-2 py-1 rounded">{t(`English HL: ${degree["english home language"]}%+`)}</span>
           )}
           {degree["english first additional language"] && (
-            <span className="bg-[var(--color-surface-muted)] px-2 py-1 rounded">English FAL: {degree["english first additional language"]}%+</span>
+            <span className="bg-[var(--color-surface-muted)] px-2 py-1 rounded">{t(`English FAL: ${degree["english first additional language"]}%+`)}</span>
           )}
         </div>
         {degree["additional requirements"].length > 0 && (
           <div className="mt-2">
-            <span className="text-[var(--color-text-subtle)] text-sm">Additional: </span>
-            <span className="text-[var(--color-text)] text-sm">{degree["additional requirements"].join(", ")}</span>
+            <span className="text-[var(--color-text-subtle)] text-sm">{t('Additional: ')}</span>
+            <span className="text-[var(--color-text)] text-sm">{t(degree["additional requirements"].join(', '))}</span>
           </div>
         )}
       </div>
 
       {/* Careers */}
       <div className="mb-4">
-        <h4 className="text-sm font-medium text-[var(--color-text)] mb-2">Career Opportunities:</h4>
+        <h4 className="text-sm font-medium text-[var(--color-text)] mb-2">{t('Career Opportunities:')}</h4>
         <div className="flex flex-wrap gap-1">
           {degree.careers.map((career, index) => (
             <span
               key={index}
               className="bg-[var(--color-primary-soft)] text-[var(--color-primary)] px-2 py-1 rounded text-sm border border-[var(--color-button-outline)]"
             >
-              {career}
+              {t(career)}
             </span>
           ))}
         </div>
@@ -153,8 +155,8 @@ const QualifyingDegreesPage = () => {
       {/* Recommendation reason (only for recommended degrees) */}
       {isRecommended && 'recommendation_reason' in degree && (
         <div className="border-t border-[var(--color-border)] pt-4">
-          <h4 className="text-sm font-medium text-[var(--color-primary)] mb-2">Why this degree is recommended for you:</h4>
-          <p className="text-[var(--color-text)] text-sm leading-relaxed">{degree.recommendation_reason}</p>
+          <h4 className="text-sm font-medium text-[var(--color-primary)] mb-2">{t('Why this degree is recommended for you:')}</h4>
+          <p className="text-[var(--color-text)] text-sm leading-relaxed">{t(degree.recommendation_reason)}</p>
         </div>
       )}
     </div>
@@ -163,7 +165,7 @@ const QualifyingDegreesPage = () => {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-[var(--color-page-bg)] flex items-center justify-center">
-        <div className="text-[var(--color-text)] text-lg">Loading qualifying degrees...</div>
+        <div className="text-[var(--color-text)] text-lg">{t('Loading qualifying degrees...')}</div>
       </div>
     );
   }
@@ -173,7 +175,7 @@ const QualifyingDegreesPage = () => {
       {/* Header */}
       <div className="bg-[var(--color-surface)] border-b border-[var(--color-border)] py-6">
         <div className="max-w-6xl mx-auto px-6">
-          <h1 className="text-3xl font-bold text-[var(--color-text)] mb-6">Qualifying Degrees</h1>
+          <h1 className="text-3xl font-bold text-[var(--color-text)] mb-6">{t('Qualifying Degrees')}</h1>
 
           {/* Tab Navigation */}
           <div className="flex space-x-4">
@@ -184,7 +186,7 @@ const QualifyingDegreesPage = () => {
                 : 'bg-[var(--color-surface-muted)] text-[var(--color-text)] hover:bg-[var(--color-primary-soft)] hover:text-[var(--color-primary)]'
                 }`}
             >
-              All Degrees
+              {t('All Degrees')}
             </button>
             <button
               onClick={() => setActiveTab('recommended')}
@@ -193,7 +195,7 @@ const QualifyingDegreesPage = () => {
                 : 'bg-[var(--color-surface-muted)] text-[var(--color-text)] hover:bg-[var(--color-primary-soft)] hover:text-[var(--color-primary)]'
                 }`}
             >
-              Recommended Degrees
+              {t('Recommended Degrees')}
             </button>
           </div>
         </div>
@@ -206,29 +208,29 @@ const QualifyingDegreesPage = () => {
             <div className="mb-8">
               <div className="flex flex-wrap gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-[var(--color-text)] mb-2">University</label>
+                  <label className="block text-sm font-medium text-[var(--color-text)] mb-2">{t('University')}</label>
                   <select
                     value={selectedUniversity}
                     onChange={(e) => setSelectedUniversity(e.target.value)}
                     className="bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text)] rounded-lg px-3 py-2 focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent"
                   >
-                    <option value="all">All Universities</option>
+                    <option value="all">{t('All Universities')}</option>
                     {universities.map(university => (
-                      <option key={university} value={university}>{university}</option>
+                      <option key={university} value={university}>{t(university)}</option>
                     ))}
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-[var(--color-text)] mb-2">Faculty</label>
+                  <label className="block text-sm font-medium text-[var(--color-text)] mb-2">{t('Faculty')}</label>
                   <select
                     value={selectedFaculty}
                     onChange={(e) => setSelectedFaculty(e.target.value)}
                     className="bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text)] rounded-lg px-3 py-2 focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent"
                   >
-                    <option value="all">All Faculties</option>
+                    <option value="all">{t('All Faculties')}</option>
                     {faculties.map(faculty => (
-                      <option key={faculty} value={faculty}>{faculty}</option>
+                      <option key={faculty} value={faculty}>{t(faculty)}</option>
                     ))}
                   </select>
                 </div>
@@ -238,7 +240,7 @@ const QualifyingDegreesPage = () => {
             {/* Results Count */}
             <div className="mb-6">
               <p className="text-[var(--color-text-subtle)]">
-                Showing {filteredDegrees.length} degrees that you qualify for
+                {t(`Showing ${filteredDegrees.length} degrees that you qualify for`)}
               </p>
             </div>
 
@@ -251,7 +253,7 @@ const QualifyingDegreesPage = () => {
 
             {filteredDegrees.length === 0 && (
               <div className="text-center py-12">
-                <p className="text-[var(--color-text-subtle)] text-lg">No degrees match your current filters.</p>
+                <p className="text-[var(--color-text-subtle)] text-lg">{t('No degrees match your current filters.')}</p>
               </div>
             )}
           </>
@@ -260,9 +262,9 @@ const QualifyingDegreesPage = () => {
             {/* Personality Summary */}
             <div className="mb-8">
               <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-6">
-                <h2 className="text-xl font-semibold text-[var(--color-text)] mb-4">Your Personality & Career Match</h2>
+                <h2 className="text-xl font-semibold text-[var(--color-text)] mb-4">{t('Your Personality & Career Match')}</h2>
                 <div className="text-[var(--color-text)] leading-relaxed whitespace-pre-line">
-                  {personalityText}
+                  {t(personalityText)}
                 </div>
               </div>
             </div>
@@ -270,10 +272,10 @@ const QualifyingDegreesPage = () => {
             {/* Top 5 Recommended Degrees */}
             <div>
               <h2 className="text-2xl font-semibold text-[var(--color-text)] mb-6">
-                Top 5 Recommended Degrees for You
+                {t('Top 5 Recommended Degrees for You')}
               </h2>
               <p className="text-[var(--color-text-subtle)] mb-8">
-                These degrees are specially selected based on your personality assessment and academic qualifications.
+                {t('These degrees are specially selected based on your personality assessment and academic qualifications.')}
               </p>
 
               <div className="space-y-6">
@@ -289,7 +291,7 @@ const QualifyingDegreesPage = () => {
 
               {recommendedDegrees.length === 0 && (
                 <div className="text-center py-12">
-                  <p className="text-[var(--color-text-subtle)] text-lg">No recommended degrees available at this time.</p>
+                  <p className="text-[var(--color-text-subtle)] text-lg">{t('No recommended degrees available at this time.')}</p>
                 </div>
               )}
             </div>

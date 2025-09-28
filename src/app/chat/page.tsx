@@ -414,7 +414,8 @@ export default function ChatPage() {
                               onClick={() => handleSuggestionSelect(suggestion)}
                               className="rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface-muted)] px-5 py-4 text-left text-sm text-[var(--color-text)] shadow-sm transition hover:-translate-y-0.5 hover:border-[var(--color-border-strong)] hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"
                             >
-                              {suggestion}
+
+                              {t(suggestion)}
                             </button>
                           ))}
                         </div>

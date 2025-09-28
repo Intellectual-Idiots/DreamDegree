@@ -1,5 +1,9 @@
+'use client';
+
+import { useTranslation } from "@/utils/translate";
+
 export default function Home() {
-  return (
-    <h1>hi</h1>
-  );
+  const { t } = useTranslation();
+
+  return <h1>{t("hi")}</h1>;
 }
