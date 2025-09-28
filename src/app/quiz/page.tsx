@@ -1,5 +1,6 @@
 'use client';
 
+import { generatePersonalitySummary } from '@/utils/generate-personality-summary';
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -138,9 +139,14 @@ const PersonalityQuizPage = () => {
       timestamp: new Date().toISOString()
     };
 
+    // Save Quiz Data
     localStorage.setItem('quiz_data', JSON.stringify(quizData));
-
     console.log('Quiz data saved to localStorage');
+
+    // Generate personality summary (function stores personality_summary in localStorage)
+    const summary = generatePersonalitySummary();
+    console.log('Generated summary:', summary);
+
     // Navigate to the next page (qualifying degrees)
     router.push('/qualifying-degrees');
   };
