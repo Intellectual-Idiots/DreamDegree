@@ -1,5 +1,6 @@
 'use client';
 
+
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -126,9 +127,20 @@ const PersonalityQuizPage = () => {
 
   // Submit quiz
   const handleSubmit = () => {
-    // Here you would typically save the answers to your backend or local storage
+
+    console.log('Questions: ', questions);
     console.log('Quiz answers:', answers);
 
+    // Save questions and answers to localStorage
+    const quizData = {
+      questions: questions,
+      answers: answers,
+      timestamp: new Date().toISOString()
+    };
+
+    localStorage.setItem('quiz_data', JSON.stringify(quizData));
+
+    console.log('Quiz data saved to localStorage');
     // Navigate to the next page (qualifying degrees)
     router.push('/qualifying-degrees');
   };
