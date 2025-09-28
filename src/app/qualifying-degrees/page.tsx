@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react';
 
+import { get_qualified_degrees } from '@/utils/touch';
+
 // Define the degree interface
 interface Degree {
   title: string;
@@ -37,10 +39,17 @@ const QualifyingDegreesPage = () => {
   useEffect(() => {
     const loadData = async () => {
       try {
-        // Load all degrees
-        const allDegreesResponse = await fetch('/all-degrees.json');
-        const allDegreesData: Degree[] = await allDegreesResponse.json();
+
+        // // Load all degrees
+        // const allDegreesResponse = await fetch('/qualified-degrees-v2.json');
+        // const allDegreesData: Degree[] = await allDegreesResponse.json();
+        // setAllDegrees(allDegreesData);
+
+        // ====================
+        const allDegreesData: Degree[] = await get_qualified_degrees();
         setAllDegrees(allDegreesData);
+        console.log('allDegreesData', allDegreesData);
+        //=====================
 
         // Load recommended degrees
         const recommendedDegreesResponse = await fetch('/recommended-degrees.json');
@@ -62,9 +71,20 @@ const QualifyingDegreesPage = () => {
     loadData();
   }, []);
 
+  // Reset faculty filter when university changes
+  useEffect(() => {
+    setSelectedFaculty('all');
+  }, [selectedUniversity]);
+
   // Get unique universities and faculties for filters
   const universities = [...new Set(allDegrees.map(degree => degree.university))];
-  const faculties = [...new Set(allDegrees.map(degree => degree.faculty))];
+  // Get faculties based on selected university
+  const faculties = selectedUniversity === 'all'
+    ? [...new Set(allDegrees.map(degree => degree.faculty))]
+    : [...new Set(allDegrees
+      .filter(degree => degree.university === selectedUniversity)
+      .map(degree => degree.faculty)
+    )];
 
   // Filter degrees based on selected filters
   const filteredDegrees = allDegrees.filter(degree => {
@@ -160,8 +180,8 @@ const QualifyingDegreesPage = () => {
             <button
               onClick={() => setActiveTab('all')}
               className={`px-6 py-3 rounded-lg font-medium transition-all duration-200 ${activeTab === 'all'
-                  ? 'bg-[var(--color-primary)] text-white'
-                  : 'bg-[var(--color-surface-muted)] text-[var(--color-text)] hover:bg-[var(--color-primary-soft)] hover:text-[var(--color-primary)]'
+                ? 'bg-[var(--color-primary)] text-white'
+                : 'bg-[var(--color-surface-muted)] text-[var(--color-text)] hover:bg-[var(--color-primary-soft)] hover:text-[var(--color-primary)]'
                 }`}
             >
               All Degrees
@@ -169,8 +189,8 @@ const QualifyingDegreesPage = () => {
             <button
               onClick={() => setActiveTab('recommended')}
               className={`px-6 py-3 rounded-lg font-medium transition-all duration-200 ${activeTab === 'recommended'
-                  ? 'bg-[var(--color-primary)] text-white'
-                  : 'bg-[var(--color-surface-muted)] text-[var(--color-text)] hover:bg-[var(--color-primary-soft)] hover:text-[var(--color-primary)]'
+                ? 'bg-[var(--color-primary)] text-white'
+                : 'bg-[var(--color-surface-muted)] text-[var(--color-text)] hover:bg-[var(--color-primary-soft)] hover:text-[var(--color-primary)]'
                 }`}
             >
               Recommended Degrees

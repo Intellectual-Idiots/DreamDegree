@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { generateGapAnalysisJSON, getGapAnalysisData } from '@/utils/generate-gap-analysis';
 
+
 // Define interfaces
 interface EnhancedDegree {
   title: string;
@@ -38,9 +39,10 @@ const GapAnalysisPage = () => {
         let data = getGapAnalysisData();
 
         // If no data exists, generate it
-        if (!data || data.length === 0) {
-          data = await generateGapAnalysisJSON();
-        }
+        // if (!data || data.length === 0) {
+        data = await generateGapAnalysisJSON();
+        // }
+
 
         setDegrees(data || []);
         setIsLoading(false);
@@ -212,14 +214,14 @@ const GapAnalysisPage = () => {
                 key={difficulty}
                 onClick={() => setSelectedDifficulty(difficulty)}
                 className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center gap-2 ${selectedDifficulty === difficulty
-                    ? 'bg-[var(--color-primary)] text-white'
-                    : 'bg-[var(--color-surface-muted)] text-[var(--color-text)] hover:bg-[var(--color-primary-soft)] hover:text-[var(--color-primary)]'
+                  ? 'bg-[var(--color-primary)] text-white'
+                  : 'bg-[var(--color-surface-muted)] text-[var(--color-text)] hover:bg-[var(--color-primary-soft)] hover:text-[var(--color-primary)]'
                   }`}
               >
                 {difficulty === 'all' ? 'All Degrees' : difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}
                 <span className={`px-2 py-1 rounded text-xs ${selectedDifficulty === difficulty
-                    ? 'bg-white/20 text-white'
-                    : 'bg-[var(--color-border)] text-[var(--color-text-subtle)]'
+                  ? 'bg-white/20 text-white'
+                  : 'bg-[var(--color-border)] text-[var(--color-text-subtle)]'
                   }`}>
                   {count}
                 </span>
