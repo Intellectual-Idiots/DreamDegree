@@ -13,7 +13,7 @@ interface QuizData {
   timestamp: string;
 }
 
-interface PersonalitySummary {
+export interface PersonalitySummary {
   personality_summary: string;
   work_style: string;
   top_interests: string[];
