@@ -71,9 +71,20 @@ const QualifyingDegreesPage = () => {
     loadData();
   }, []);
 
+  // Reset faculty filter when university changes
+  useEffect(() => {
+    setSelectedFaculty('all');
+  }, [selectedUniversity]);
+
   // Get unique universities and faculties for filters
   const universities = [...new Set(allDegrees.map(degree => degree.university))];
-  const faculties = [...new Set(allDegrees.map(degree => degree.faculty))];
+  // Get faculties based on selected university
+  const faculties = selectedUniversity === 'all'
+    ? [...new Set(allDegrees.map(degree => degree.faculty))]
+    : [...new Set(allDegrees
+      .filter(degree => degree.university === selectedUniversity)
+      .map(degree => degree.faculty)
+    )];
 
   // Filter degrees based on selected filters
   const filteredDegrees = allDegrees.filter(degree => {
