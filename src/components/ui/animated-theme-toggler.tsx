@@ -76,11 +76,10 @@ export const AnimatedThemeToggler = ({ className }: Props) => {
       ref={buttonRef} 
       onClick={toggleTheme} 
       className={cn(
-        "group relative p-3 rounded-full",
-        "bg-background/95 backdrop-blur",
-        "border border-border shadow-lg",
-        "transition-all duration-300 hover:scale-110",
-        "dark:bg-background/90 dark:border-border/50",
+        "group relative rounded-full border border-primary/40 bg-primary/20 p-3",
+        "shadow-[0_0_18px_rgba(168,85,247,0.35)] transition-all duration-300",
+        "hover:border-primary/60 hover:bg-primary/30 hover:shadow-[0_0_26px_rgba(168,85,247,0.45)]",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60",
         className
       )}
       aria-label={`Switch to ${isDark ? 'light' : 'dark'} theme`}
@@ -88,15 +87,15 @@ export const AnimatedThemeToggler = ({ className }: Props) => {
       {/* CHANGE: Added rotation animation to icons */}
       {isDark ? (
         <Sun className={cn(
-          "h-5 w-5 transition-transform duration-300",
+          "h-5 w-5 transition-transform duration-300 text-primary-foreground",
           isRotating && "rotate-180",
-          "text-foreground/80 group-hover:text-foreground"
+          "group-hover:scale-110"
         )} />
       ) : (
         <Moon className={cn(
-          "h-5 w-5 transition-transform duration-300",
+          "h-5 w-5 transition-transform duration-300 text-primary-foreground",
           isRotating && "rotate-180",
-          "text-foreground/80 group-hover:text-foreground"
+          "group-hover:scale-110"
         )} />
       )}
     </button>

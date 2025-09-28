@@ -126,11 +126,9 @@ export const AnimatedLanguageSwitcher = ({ className }: Props) => {
         ref={buttonRef}
         onClick={toggleMenu}
         className={cn(
-          "group relative p-3 rounded-full",
-          "bg-background/95 backdrop-blur",
-          "border border-border shadow-lg",
-          "transition-all duration-300 hover:scale-110",
-          "dark:bg-background/90 dark:border-border/50",
+          "group relative rounded-full border border-primary/40 bg-primary/20 p-3",
+          "shadow-[0_0_18px_rgba(168,85,247,0.35)] transition-all duration-300",
+          "hover:border-primary/60 hover:bg-primary/30 hover:shadow-[0_0_26px_rgba(168,85,247,0.45)]",
           isAnimating && "animate-pulse"
         )}
         aria-label={`Current language: ${LANGUAGES[currentLang]}. Click to change language`}
@@ -159,9 +157,7 @@ export const AnimatedLanguageSwitcher = ({ className }: Props) => {
         className={cn(
           "absolute bottom-full right-0 mb-2",
           "grid grid-cols-3 gap-1 p-2",
-          "bg-background/95 backdrop-blur",
-          "border border-border rounded-lg shadow-xl",
-          "dark:bg-background/90 dark:border-border/50",
+          "rounded-xl border border-primary/25 bg-sidebar shadow-[0_18px_40px_rgba(16,6,32,0.45)]",
           "transition-all duration-300 origin-bottom-right",
           isOpen 
             ? "opacity-100 scale-100 pointer-events-auto" 
@@ -175,10 +171,9 @@ export const AnimatedLanguageSwitcher = ({ className }: Props) => {
             onClick={() => switchLanguage(code)}
             className={cn(
               "relative flex flex-col items-center justify-center",
-              "p-2 rounded-md text-xs",
-              "transition-all duration-200",
-              "hover:bg-accent hover:text-accent-foreground",
-              currentLang === code && "bg-primary/10 text-primary",
+              "p-2 text-xs transition-all duration-200",
+              "rounded-lg hover:bg-primary/15 hover:text-primary",
+              currentLang === code && "bg-primary/25 text-primary",
               "group"
             )}
             title={name}

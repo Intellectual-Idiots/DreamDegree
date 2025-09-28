@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "@/app/globals.css";
-import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
-import { AnimatedLanguageSwitcher } from "@/components/ui/animated-language-switcher";
+import { AppShell } from "@/components/app-shell";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,13 +28,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
-        
-        {/* Fixed position controls in bottom right */}
-        <div className="fixed bottom-4 right-4 z-50 flex flex-row gap-4 items-center">
-        
-          <AnimatedLanguageSwitcher className="cursor-pointer" />
-        </div>
+        <AppShell>{children}</AppShell>
       </body>
     </html>
   );
