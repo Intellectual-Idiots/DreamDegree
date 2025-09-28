@@ -25,10 +25,10 @@ export async function analyzeReportAction(formData: FormData): Promise<AnalyzeRe
     };
   }
 
-  if (file.type !== "image/jpeg") {
+  if (!file.type.startsWith("image/")) {
     return {
       success: false,
-      error: "Only JPG files are supported right now.",
+      error: "Please upload an image file (JPG, PNG, or similar).",
     };
   }
 

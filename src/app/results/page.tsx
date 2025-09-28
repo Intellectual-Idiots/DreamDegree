@@ -341,9 +341,8 @@ export default function ResultsPage() {
     }
 
     const file = files[0];
-    const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp", "image/gif"];
-    if (!allowedTypes.includes(file.type)) {
-      setFileError("Please upload a valid image file (JPG, PNG, WebP, or GIF).");
+    if (!file.type.startsWith("image/")) {
+      setFileError("Please upload a valid image file (JPG, PNG, WebP, etc.).");
       setSelectedFile(null);
       return;
     }
@@ -709,13 +708,13 @@ export default function ResultsPage() {
                 >
                   <input
                     type="file"
-                    accept="image/jpeg,image/jpg,image/png,image/webp,image/gif"
+                    accept="image/*"
                     className="hidden"
                     onChange={(event) => handleFileInput(event.target.files)}
                   />
                   <UploadCloud className="h-10 w-10 text-[var(--color-primary)]" aria-hidden />
                   <p className="mt-3 text-sm text-[var(--color-text-subtle)]">
-                    Drop image file here or click to browse
+                    Drop an image here or click to browse
                   </p>
                   {selectedFile && (
                     <p className="mt-2 text-xs text-[var(--color-text-subtle)]">

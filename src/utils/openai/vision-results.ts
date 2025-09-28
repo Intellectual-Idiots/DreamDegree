@@ -78,7 +78,14 @@ const VISION_MODEL = process.env.OPENAI_VISION_MODEL ?? "gpt-4o-mini";
 export async function extractVisionResultsFromFile(file: File | Blob): Promise<VisionResponse> {
   const arrayBuffer = await file.arrayBuffer();
   const base64 = Buffer.from(arrayBuffer).toString("base64");
-  const mimeType = file instanceof File ? file.type : "image/jpeg";
+  
+  // Get the MIME type from the file, with fallback to image/jpeg
+  let mimeType = "image/jpeg";
+  if (file instanceof File && file.type) {
+    mimeType = file.type;
+  } else if (file instanceof Blob && file.type) {
+    mimeType = file.type;
+  }
 
   const dataUrl = `data:${mimeType};base64,${base64}`;
 
