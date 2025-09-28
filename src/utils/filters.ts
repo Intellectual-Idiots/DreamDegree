@@ -60,6 +60,7 @@ const all_degrees = async () => {
 const get_qualified_degrees = async () => {
   try {
     const get_all = await all_degrees();
+    console.log('All degrees fetched:', get_all);
     const user_marks = JSON.parse(localStorage.getItem('resultsData') || '[]');
 
     // console.log(get_all);

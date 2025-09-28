@@ -48,6 +48,7 @@ const QualifyingDegreesPage = () => {
         // ====================
         const allDegreesData: Degree[] = await get_qualified_degrees();
         setAllDegrees(allDegreesData);
+        console.log('allDegreesData', allDegreesData);
         //=====================
 
         // Load recommended degrees
