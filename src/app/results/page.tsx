@@ -2,6 +2,14 @@
 
 import { type DragEvent, useEffect, useMemo, useState } from "react";
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 const SUBJECTS = [
   "Mathematics",
   "English",
@@ -125,8 +133,21 @@ export default function ResultsPage() {
     );
   };
 
+  const manualEntriesAreValid = manualEntries.every((entry) => {
+    if (!entry.subject || entry.mark.trim() === "") {
+      return false;
+    }
+
+    const numeric = Number(entry.mark);
+    return Number.isFinite(numeric) && numeric >= 0 && numeric <= 100;
+  });
+
   const handleManualSave = () => {
     if (typeof window === "undefined") {
+      return;
+    }
+
+    if (!manualEntriesAreValid) {
       return;
     }
 
@@ -202,6 +223,10 @@ export default function ResultsPage() {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(results));
   };
 
+  const resultsAreValid = results.every(
+    (row) => row.subject && Number.isFinite(row.mark),
+  );
+
   const closeAllModals = () => {
     setIsUploadOpen(false);
     setIsManualOpen(false);
@@ -211,13 +236,13 @@ export default function ResultsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 px-4 py-16">
+    <div className="min-h-screen bg-[var(--color-page-bg)] px-4 py-16 text-[var(--color-text)]">
       <div className="mx-auto flex w-full max-w-5xl flex-col gap-12">
         <header className="text-center">
-          <h1 className="text-3xl font-semibold text-slate-900">
+          <h1 className="text-3xl font-semibold text-[var(--color-text)]">
             Manage Your Results
           </h1>
-          <p className="mt-2 text-base text-slate-600">
+          <p className="mt-2 text-base text-[var(--color-text-subtle)]">
             Upload your report or enter your marks manually. You can edit saved
             results anytime.
           </p>
@@ -227,20 +252,20 @@ export default function ResultsPage() {
           <button
             type="button"
             onClick={() => setIsUploadOpen(true)}
-            className="group flex h-full flex-col rounded-3xl border border-slate-200 bg-white p-8 text-left shadow-sm transition hover:-translate-y-1 hover:border-violet-400 hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500"
+            className="group flex h-full flex-col rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] p-8 text-left shadow-sm transition hover:-translate-y-1 hover:border-[var(--color-border-strong)] hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"
           >
             <div className="flex h-full flex-col gap-4">
-              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-violet-100 text-violet-600">
+              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[var(--color-primary-soft)] text-[var(--color-primary)]">
                 <span className="text-2xl">⬆️</span>
               </div>
-              <h2 className="text-xl font-semibold text-slate-900">
+              <h2 className="text-xl font-semibold text-[var(--color-text)]">
                 Upload Report
               </h2>
-              <p className="flex-1 text-sm text-slate-600">
+              <p className="flex-1 text-sm text-[var(--color-text-subtle)]">
                 Upload your academic transcript or report card and we will
                 extract your marks automatically.
               </p>
-              <span className="mt-auto inline-flex items-center justify-center rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 px-4 py-2 text-sm font-medium text-white transition group-hover:from-violet-600 group-hover:to-fuchsia-600">
+              <span className="mt-auto inline-flex items-center justify-center rounded-full bg-[var(--color-primary)] px-4 py-2 text-sm font-medium text-white transition group-hover:bg-[var(--color-primary-strong)]">
                 Choose File to Upload
               </span>
             </div>
@@ -249,20 +274,20 @@ export default function ResultsPage() {
           <button
             type="button"
             onClick={() => setIsManualOpen(true)}
-            className="group flex h-full flex-col rounded-3xl border border-slate-200 bg-white p-8 text-left shadow-sm transition hover:-translate-y-1 hover:border-emerald-400 hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+            className="group flex h-full flex-col rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] p-8 text-left shadow-sm transition hover:-translate-y-1 hover:border-[var(--color-border-strong)] hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"
           >
             <div className="flex h-full flex-col gap-4">
-              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
+              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[var(--color-primary-soft)] text-[var(--color-primary)]">
                 <span className="text-2xl">➕</span>
               </div>
-              <h2 className="text-xl font-semibold text-slate-900">
+              <h2 className="text-xl font-semibold text-[var(--color-text)]">
                 Manually Enter Marks
               </h2>
-              <p className="flex-1 text-sm text-slate-600">
+              <p className="flex-1 text-sm text-[var(--color-text-subtle)]">
                 Enter your marks for each subject manually for complete control
                 over your data.
               </p>
-              <span className="mt-auto inline-flex items-center justify-center rounded-full border border-emerald-500 px-4 py-2 text-sm font-medium text-emerald-600 transition group-hover:bg-emerald-500 group-hover:text-white">
+              <span className="mt-auto inline-flex items-center justify-center rounded-full border border-[var(--color-button-outline)] px-4 py-2 text-sm font-medium text-[var(--color-primary)] transition group-hover:bg-[var(--color-primary)] group-hover:text-white">
                 Enter Marks
               </span>
             </div>
@@ -270,45 +295,52 @@ export default function ResultsPage() {
         </section>
 
         {results.length > 0 && (
-          <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+          <section className="rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 shadow-sm">
             <div className="flex items-center justify-between">
-              <h3 className="text-lg font-semibold text-slate-900">
+              <h3 className="text-lg font-semibold text-[var(--color-text)]">
                 Saved Results
               </h3>
               <button
                 type="button"
                 onClick={saveResultsLocally}
-                className="rounded-full bg-slate-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-500"
+                disabled={!resultsAreValid}
+                className="rounded-full bg-[var(--color-primary)] px-4 py-2 text-sm font-medium text-white transition hover:bg-[var(--color-primary-strong)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] disabled:cursor-not-allowed disabled:opacity-60"
               >
                 Save Locally
               </button>
             </div>
             <div className="mt-6 overflow-x-auto">
-              <table className="min-w-full text-left text-sm">
+              <table className="min-w-full text-left text-sm text-[var(--color-text)]">
                 <thead>
-                  <tr className="text-xs uppercase tracking-wide text-slate-500">
+                  <tr className="text-xs uppercase tracking-wide text-[var(--color-text-subtle)]">
                     <th className="px-4 py-2">Subject</th>
                     <th className="px-4 py-2">Mark (%)</th>
                   </tr>
                 </thead>
                 <tbody>
                   {results.map((row, index) => (
-                    <tr key={`${row.subject}-${index}`} className="border-t">
+                    <tr
+                      key={`${row.subject}-${index}`}
+                      className="border-t border-[var(--color-border)]"
+                    >
                       <td className="px-4 py-3">
-                        <select
-                          value={row.subject}
-                          onChange={(event) =>
-                            updateResultRow(index, "subject", event.target.value)
+                        <Select
+                          value={row.subject || undefined}
+                          onValueChange={(value) =>
+                            updateResultRow(index, "subject", value)
                           }
-                          className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-500"
                         >
-                          <option value="">Select subject</option>
-                          {SUBJECTS.map((subject) => (
-                            <option key={subject} value={subject}>
-                              {subject}
-                            </option>
-                          ))}
-                        </select>
+                          <SelectTrigger className="w-full border-[var(--color-border)] bg-[var(--color-surface)] text-left text-sm text-[var(--color-text)] focus-visible:ring-[var(--color-primary)]">
+                            <SelectValue placeholder="Select subject" />
+                          </SelectTrigger>
+                          <SelectContent className="border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text)]">
+                            {SUBJECTS.map((subject) => (
+                              <SelectItem key={subject} value={subject}>
+                                {subject}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
                       </td>
                       <td className="px-4 py-3">
                         <input
@@ -319,7 +351,7 @@ export default function ResultsPage() {
                           onChange={(event) =>
                             updateResultRow(index, "mark", event.target.value)
                           }
-                          className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-500"
+                          className="w-full rounded-lg border border-[var(--color-border)] px-3 py-2 text-sm text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
                         />
                       </td>
                     </tr>
@@ -332,16 +364,16 @@ export default function ResultsPage() {
       </div>
 
       {(isUploadOpen || isManualOpen) && (
-        <div className="fixed inset-0 z-40 flex items-center justify-center bg-slate-900/50 px-4">
+        <div className="fixed inset-0 z-40 flex items-center justify-center bg-[var(--color-overlay)] px-4">
           <div className="absolute inset-0" onClick={closeAllModals} />
 
           {isUploadOpen && (
-            <div className="relative z-50 w-full max-w-lg rounded-3xl bg-white p-8 shadow-xl">
+            <div className="relative z-50 w-full max-w-lg rounded-3xl bg-[var(--color-surface)] p-8 text-[var(--color-text)] shadow-xl">
               <header className="mb-6">
-                <h2 className="text-2xl font-semibold text-slate-900">
+                <h2 className="text-2xl font-semibold text-[var(--color-text)]">
                   Upload Report
                 </h2>
-                <p className="mt-2 text-sm text-slate-600">
+                <p className="mt-2 text-sm text-[var(--color-text-subtle)]">
                   Drag and drop your JPG report card here, or click to select a
                   file.
                 </p>
@@ -354,9 +386,11 @@ export default function ResultsPage() {
                 }}
                 onDragLeave={() => setDragActive(false)}
                 onDrop={handleDrop}
-                className={`flex h-48 w-full cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed ${
-                  dragActive ? "border-violet-500 bg-violet-50" : "border-slate-200"
-                } transition`}
+                className={`flex h-48 w-full cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed transition ${
+                  dragActive
+                    ? "border-[var(--color-primary)] bg-[var(--color-primary-soft)]"
+                    : "border-[var(--color-border)]"
+                }`}
               >
                 <input
                   type="file"
@@ -364,17 +398,19 @@ export default function ResultsPage() {
                   className="hidden"
                   onChange={(event) => handleFileInput(event.target.files)}
                 />
-                <span className="text-4xl text-violet-500">⬆️</span>
-                <p className="mt-3 text-sm text-slate-600">
+                <span className="text-4xl text-[var(--color-primary)]">⬆️</span>
+                <p className="mt-3 text-sm text-[var(--color-text-subtle)]">
                   Drop JPG file here or click to browse
                 </p>
                 {selectedFile && (
-                  <p className="mt-2 text-xs text-slate-500">
+                  <p className="mt-2 text-xs text-[var(--color-text-subtle)]">
                     Selected: {selectedFile.name}
                   </p>
                 )}
                 {fileError && (
-                  <p className="mt-2 text-xs text-rose-500">{fileError}</p>
+                  <p className="mt-2 text-xs text-[var(--color-primary)]">
+                    {fileError}
+                  </p>
                 )}
               </label>
 
@@ -382,7 +418,7 @@ export default function ResultsPage() {
                 <button
                   type="button"
                   onClick={closeAllModals}
-                  className="rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100"
+                  className="rounded-full border border-[var(--color-border)] px-4 py-2 text-sm font-medium text-[var(--color-text-subtle)] transition hover:bg-[var(--color-primary-soft)]"
                 >
                   Cancel
                 </button>
@@ -390,7 +426,7 @@ export default function ResultsPage() {
                   type="button"
                   disabled={!selectedFile}
                   onClick={closeAllModals}
-                  className="rounded-full bg-violet-500 px-4 py-2 text-sm font-medium text-white transition enabled:hover:bg-violet-600 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="rounded-full bg-[var(--color-primary)] px-4 py-2 text-sm font-medium text-white transition enabled:hover:bg-[var(--color-primary-strong)] disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   Done
                 </button>
@@ -399,44 +435,47 @@ export default function ResultsPage() {
           )}
 
           {isManualOpen && (
-            <div className="relative z-50 w-full max-w-3xl rounded-3xl bg-white p-8 shadow-xl">
+            <div className="relative z-50 w-full max-w-3xl rounded-3xl bg-[var(--color-surface)] p-8 text-[var(--color-text)] shadow-xl">
               <header className="mb-6">
-                <h2 className="text-2xl font-semibold text-slate-900">
+                <h2 className="text-2xl font-semibold text-[var(--color-text)]">
                   Enter Marks Manually
                 </h2>
-                <p className="mt-2 text-sm text-slate-600">
+                <p className="mt-2 text-sm text-[var(--color-text-subtle)]">
                   Choose a subject and enter the corresponding percentage mark.
                 </p>
               </header>
 
-              <div className="flex flex-col gap-4">
+              <div className="flex max-h-[55vh] flex-col gap-4 overflow-y-auto pr-1">
                 {manualEntries.map((entry, index) => (
                   <div
                     key={entry.id}
-                    className="grid gap-3 rounded-2xl border border-slate-200 p-4 md:grid-cols-[1fr_160px_auto]"
+                    className="grid gap-3 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-4 md:grid-cols-[1fr_160px_auto]"
                   >
                     <div>
-                      <label className="mb-1 block text-xs font-medium uppercase tracking-wide text-slate-500">
+                      <label className="mb-1 block text-xs font-medium uppercase tracking-wide text-[var(--color-text-subtle)]">
                         Subject
                       </label>
-                      <select
-                        value={entry.subject}
-                        onChange={(event) =>
-                          handleManualEntryChange(entry.id, "subject", event.target.value)
+                      <Select
+                        value={entry.subject || undefined}
+                        onValueChange={(value) =>
+                          handleManualEntryChange(entry.id, "subject", value)
                         }
-                        className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
                       >
-                        <option value="">Select subject</option>
-                        {availableSubjectsById[entry.id]?.map((subject) => (
-                          <option key={subject} value={subject}>
-                            {subject}
-                          </option>
-                        ))}
-                      </select>
+                        <SelectTrigger className="w-full border-[var(--color-border)] bg-[var(--color-surface)] text-left text-sm text-[var(--color-text)] focus-visible:ring-[var(--color-primary)]">
+                          <SelectValue placeholder="Select subject" />
+                        </SelectTrigger>
+                        <SelectContent className="border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text)]">
+                          {availableSubjectsById[entry.id]?.map((subject) => (
+                            <SelectItem key={subject} value={subject}>
+                              {subject}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                     </div>
 
                     <div>
-                      <label className="mb-1 block text-xs font-medium uppercase tracking-wide text-slate-500">
+                      <label className="mb-1 block text-xs font-medium uppercase tracking-wide text-[var(--color-text-subtle)]">
                         Mark (%)
                       </label>
                       <input
@@ -447,7 +486,7 @@ export default function ResultsPage() {
                         onChange={(event) =>
                           handleManualEntryChange(entry.id, "mark", event.target.value)
                         }
-                        className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        className="w-full rounded-lg border border-[var(--color-border)] px-3 py-2 text-sm text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
                       />
                     </div>
 
@@ -455,7 +494,7 @@ export default function ResultsPage() {
                       <button
                         type="button"
                         onClick={() => removeManualEntryRow(entry.id)}
-                        className="h-10 rounded-full border border-slate-200 px-4 text-sm font-medium text-slate-600 transition hover:bg-slate-100 disabled:opacity-50"
+                        className="h-10 rounded-full border border-[var(--color-border)] px-4 text-sm font-medium text-[var(--color-text-subtle)] transition hover:bg-[var(--color-primary-soft)] disabled:cursor-not-allowed disabled:opacity-50"
                         disabled={manualEntries.length === 1}
                       >
                         Remove
@@ -469,7 +508,7 @@ export default function ResultsPage() {
                 <button
                   type="button"
                   onClick={addManualEntryRow}
-                  className="rounded-full border border-emerald-500 px-4 py-2 text-sm font-medium text-emerald-600 transition hover:bg-emerald-500 hover:text-white"
+                  className="rounded-full border border-[var(--color-button-outline)] px-4 py-2 text-sm font-medium text-[var(--color-primary)] transition hover:bg-[var(--color-primary)] hover:text-white"
                 >
                   Add Subject
                 </button>
@@ -477,14 +516,15 @@ export default function ResultsPage() {
                   <button
                     type="button"
                     onClick={closeAllModals}
-                    className="rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100"
+                    className="rounded-full border border-[var(--color-border)] px-4 py-2 text-sm font-medium text-[var(--color-text-subtle)] transition hover:bg-[var(--color-primary-soft)]"
                   >
                     Cancel
                   </button>
                   <button
                     type="button"
                     onClick={handleManualSave}
-                    className="rounded-full bg-emerald-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-emerald-600"
+                    disabled={!manualEntriesAreValid}
+                    className="rounded-full bg-[var(--color-primary)] px-4 py-2 text-sm font-medium text-white transition hover:bg-[var(--color-primary-strong)] disabled:cursor-not-allowed disabled:opacity-60"
                   >
                     Save Table
                   </button>
