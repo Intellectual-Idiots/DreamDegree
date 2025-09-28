@@ -73,7 +73,7 @@ const parseVisionResponse = (content: string | null | undefined): VisionResponse
   }
 };
 
-const VISION_MODEL = process.env.OPENAI_VISION_MODEL ?? "gpt-4o-mini";
+const VISION_MODEL = process.env.OPENAI_VISION_MODEL ?? "gpt-4.1";
 
 export async function extractVisionResultsFromFile(file: File | Blob): Promise<VisionResponse> {
   const arrayBuffer = await file.arrayBuffer();
@@ -108,7 +108,7 @@ export async function extractVisionResultsFromFile(file: File | Blob): Promise<V
             type: "image_url",
             image_url: {
               url: dataUrl,
-              detail: "low",
+              detail: "high",
             },
           },
         ],
