@@ -87,6 +87,7 @@ const get_qualified_degrees = async () => {
 const check_degree_qualification = (degree: any, user_marks: any[]): boolean => {
   // Check APS requirement
   const user_aps = get_aps_by_university(degree.university);
+  console.log(`User APS for ${degree.university}:`, user_aps, 'Degree APS requirement:', degree.aps);
   if (user_aps < degree.aps) {
     return false;
   }
