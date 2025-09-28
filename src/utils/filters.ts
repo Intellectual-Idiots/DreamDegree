@@ -6,14 +6,14 @@
 import { get_ufs_aps, get_up_aps, get_wits_aps } from "./aps-calculator";
 
 const get_aps_by_university = (university: string): number => {
-  switch (university) {
-    case 'University of the Free State':
+  switch (university.toLowerCase()) {
+    case 'university of the free state':
       return get_ufs_aps();
-    case 'University of Free State':
+    case 'university of free state':
       return get_ufs_aps();
-    case 'University of Pretoria':
+    case 'university of pretoria':
       return get_up_aps();
-    case 'University of the Witwatersrand':
+    case 'university of the witwatersrand':
       return get_wits_aps();
     default:
       throw new Error('Unknown university');
