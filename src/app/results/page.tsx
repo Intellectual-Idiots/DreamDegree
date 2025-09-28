@@ -14,7 +14,7 @@ import {
 import { analyzeReportAction } from "./action";
 import { Toaster } from "@/components/ui/sonner";
 
-const SUBJECTS = [
+const SUBJECTS_RAW = [
   "life orientation",
   "life sciences",
   "further studies mathematics",
@@ -113,6 +113,8 @@ const SUBJECTS = [
   "mechanical technology",
   "religion studies",
 ];
+
+const SUBJECTS = [...SUBJECTS_RAW].sort((a, b) => a.localeCompare(b));
 
 type SubjectOption = {
   value: string;
