@@ -112,9 +112,9 @@ export default function ResultsPage() {
       prev.map((entry) =>
         entry.id === id
           ? {
-              ...entry,
-              [field]: field === "mark" ? value.replace(/[^0-9]/g, "") : value,
-            }
+            ...entry,
+            [field]: field === "mark" ? value.replace(/[^0-9]/g, "") : value,
+          }
           : entry,
       ),
     );
@@ -386,11 +386,10 @@ export default function ResultsPage() {
                 }}
                 onDragLeave={() => setDragActive(false)}
                 onDrop={handleDrop}
-                className={`flex h-48 w-full cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed transition ${
-                  dragActive
+                className={`flex h-48 w-full cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed transition ${dragActive
                     ? "border-[var(--color-primary)] bg-[var(--color-primary-soft)]"
                     : "border-[var(--color-border)]"
-                }`}
+                  }`}
               >
                 <input
                   type="file"
