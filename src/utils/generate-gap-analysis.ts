@@ -2,7 +2,7 @@
 
 import { get_ufs_aps, get_up_aps, get_wits_aps } from "./aps-calculator";
 
-import { get_almost_qualified_degrees } from '@/utils/filters';
+import { get_almost_qualified_degrees } from '@/utils/touch';
 
 
 interface Degree {

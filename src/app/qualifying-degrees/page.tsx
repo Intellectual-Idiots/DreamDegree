@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 
-import { get_qualified_degrees } from '@/utils/filters';
+import { get_qualified_degrees } from '@/utils/touch';
 
 // Define the degree interface
 interface Degree {
