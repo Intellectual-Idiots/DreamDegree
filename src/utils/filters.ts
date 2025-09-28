@@ -89,6 +89,8 @@ const check_degree_qualification = (degree: any, user_marks: any[]): boolean => 
       continue;
     }
 
+    console.log(`Checking subject: ${subject}, required: ${required_mark}`);
+
     // Find user's mark for this subject
     const user_subject_result = user_marks.find((result: any) =>
       result.subject.toLowerCase() === subject.toLowerCase()
