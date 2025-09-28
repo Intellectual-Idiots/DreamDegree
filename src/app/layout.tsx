@@ -33,7 +33,7 @@ export default function RootLayout({
         
         {/* Fixed position controls in bottom right */}
         <div className="fixed bottom-4 right-4 z-50 flex flex-row gap-4 items-center">
-        
+      
           <AnimatedLanguageSwitcher className="cursor-pointer" />
         </div>
       </body>

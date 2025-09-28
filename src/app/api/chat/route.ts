@@ -10,7 +10,7 @@ const openai = new OpenAI({
 
 export async function POST(req: NextRequest) {
   try {
-    const { messages, model = 'gpt-4' } = await req.json();
+    const { messages, model = 'gpt-4o-mini' } = await req.json();
 
     if (!messages || !Array.isArray(messages)) {
       return NextResponse.json(
